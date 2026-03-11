@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import Navbar from "./common/Navbar";
 const LoginForm = ({
   onSubmit,
   isLoading,
@@ -18,42 +18,6 @@ const LoginForm = ({
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-slate-100 to-blue-100 flex flex-col">
-        {/* Navbar */}
-
-      <nav className="w-full px-10 py-4 flex items-center justify-between bg-white/70 backdrop-blur-sm border-b border-blue-100">
-        
-        <div className="flex items-center gap-2">
-            <span className="text-blue-600 text-2xl">:feet:</span>
-        
-          <span className="text-blue-800 font-bold text-xl tracking-tight">
-            PetConnect
-          </span>
-          
-        </div>
-       
-        <div className="flex items-center gap-8">
-        
-          <a
-            href="/"
-            className="text-gray-600 hover:text-blue-700 text-sm font-medium transition-colors"
-          >
-            Home
-          </a>
-        
-          <a
-            href="/browse"
-            className="text-gray-600 hover:text-blue-700 text-sm font-medium transition-colors"
-          >
-            Browse Pet
-          </a>
-         
-          <a href="/login" className="text-blue-500 font-semibold text-sm">
-            Login
-          </a>
-        
-        </div>
-        
-      </nav>
      {/* Main Content */}
      
       <div className="flex-1 flex items-center justify-center py-12 px-4">
@@ -65,7 +29,16 @@ const LoginForm = ({
             
             <div className="bg-blue-100 rounded-2xl w-16 h-16 flex items-center justify-center">
               
-              <span className="text-blue-600 text-3xl">:feet:</span>
+              <svg viewBox="0 0 24 24" fill="currentColor" className="w-9 h-9 text-blue-600">
+                <ellipse cx="7" cy="6" rx="1.2" ry="1.6" />
+                <ellipse cx="4.5" cy="7.5" rx="1" ry="1.4" />
+                <ellipse cx="9.5" cy="7.5" rx="1" ry="1.4" />
+                <path d="M7 10 C4 10 3 13 4.5 14.5 C5.5 15.5 8.5 15.5 9.5 14.5 C11 13 10 10 7 10Z" />
+                <ellipse cx="17" cy="4" rx="1.2" ry="1.6" />
+                <ellipse cx="14.5" cy="5.5" rx="1" ry="1.4" />
+                <ellipse cx="19.5" cy="5.5" rx="1" ry="1.4" />
+                <path d="M17 8 C14 8 13 11 14.5 12.5 C15.5 13.5 18.5 13.5 19.5 12.5 C21 11 20 8 17 8Z" />
+              </svg>
              
             </div>
            
@@ -270,7 +243,16 @@ const LoginForm = ({
          
           <div className="flex items-center gap-2">
            
-           <span className="text-blue-500 text-lg">:feet:</span>
+           <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 text-blue-600 inline-block">
+              <ellipse cx="7" cy="6" rx="1.2" ry="1.6" />
+              <ellipse cx="4.5" cy="7.5" rx="1" ry="1.4" />
+              <ellipse cx="9.5" cy="7.5" rx="1" ry="1.4" />
+              <path d="M7 10 C4 10 3 13 4.5 14.5 C5.5 15.5 8.5 15.5 9.5 14.5 C11 13 10 10 7 10Z" />
+              <ellipse cx="17" cy="4" rx="1.2" ry="1.6" />
+              <ellipse cx="14.5" cy="5.5" rx="1" ry="1.4" />
+              <ellipse cx="19.5" cy="5.5" rx="1" ry="1.4" />
+              <path d="M17 8 C14 8 13 11 14.5 12.5 C15.5 13.5 18.5 13.5 19.5 12.5 C21 11 20 8 17 8Z" />
+            </svg>
           
             <span className="text-blue-700 font-bold text-base">
               PetConnect
