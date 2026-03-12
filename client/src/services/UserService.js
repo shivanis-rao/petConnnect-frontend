@@ -1,6 +1,8 @@
 import ApiService from './Apiservices';
 
 const UserService = {
+
+  // AUTH
   login: async (payload) => {
     const response = await ApiService.post('/users/login', payload);
     return response.data;
@@ -11,22 +13,13 @@ const UserService = {
     return response.data;
   },
 
-  forgotPassword: async (email) => {
-    const response = await ApiService.post('/users/forgot-password', { email });
-    return response.data;
-  },
-
-  resetPassword: async (token, newPassword) => {
-    const response = await ApiService.post('/users/reset-password', { token, newPassword });
-    return response.data;
-  },
-
   logout: () => {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
     localStorage.removeItem('user');
   },
 
+  // SESSION
   getCurrentUser: () => {
     const user = localStorage.getItem('user');
     return user ? JSON.parse(user) : null;
@@ -45,6 +38,35 @@ const UserService = {
   getAccessToken: () => {
     return localStorage.getItem('accessToken');
   },
+
+  // PASSWORD RESET
+  forgotPassword: async (email) => {
+    const response = await ApiService.post('/users/forgot-password', { email });
+    return response.data;
+  },
+
+  resetPassword: async (token, newPassword) => {
+    const response = await ApiService.post('/users/reset-password', { token, newPassword });
+    return response.data;
+  },
+
+  // ✅ OTP — THIS WAS MISSING
+  sendOtp: async (email) => {
+    const response = await ApiService.post('/users/send-otp', { email });
+    return response.data;
+  },
+
+  verifyOtp: async (email, otp) => {
+    const response = await ApiService.post('/users/verify-otp', { email, otp });
+    return response.data;
+  },
+
+  // PROFILE
+  completeProfile: async (userId, profileData) => {
+    const response = await ApiService.put(`/users/${userId}/profile`, profileData);
+    return response.data;
+  },
+
 };
 
 export default UserService;
