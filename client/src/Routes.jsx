@@ -7,7 +7,7 @@ import ResetPasswordPage from './pages/Resetpasswordpage';
 import ForgotPasswordPage from './pages/Forgotpasswordpage';
 import RegisterPage from './pages/RegisterPage';
 import ProfileCompletionPage from './pages/ProfileCompletionPage';
-
+import AddPetPage from './pages/AddPetPage'
 
 const AppRoutes = () => {
   return (
@@ -21,6 +21,7 @@ const AppRoutes = () => {
         <Route path="/reset-password" element={<ResetPasswordPage />} />
         <Route path="/browse" element={<BrowsePetsPage />} />
         <Route path="/pets/:id" element={<PetDetailPage />} />
+        <Route path="/shelter/pets/add" element={<AddPetPage />} />
        
       </Routes>
     </BrowserRouter>
