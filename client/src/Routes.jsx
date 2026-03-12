@@ -1,3 +1,4 @@
+
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import BrowsePetsPage from "./pages/BrowsePetsPage";
@@ -11,6 +12,7 @@ import AddPetPage from "./pages/AddPetPage";
 import ShelterBasePage from "./pages/ShelterBasePage";
 import NgoRegistration from "./pages/NgoRegistration";
 import WaitingPage from "./pages/WaitingPage";
+import NgoDashboard from './pages/NGODashboard';
 
 const AppRoutes = () => {
   return (
@@ -28,6 +30,9 @@ const AppRoutes = () => {
         <Route path="/shelter-register" element={<ShelterBasePage />} />
         <Route path="/shelter/ngo-register" element={<NgoRegistration />} />
         <Route path="/shelter/waiting-area" element={<WaitingPage />} />
+          
+        <Route path="/shelter/pets" element={<NgoDashboard />} />
+
       </Routes>
     </BrowserRouter>
   );
