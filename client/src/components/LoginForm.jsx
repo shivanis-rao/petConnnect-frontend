@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Navbar from "./common/Navbar";
+
 const LoginForm = ({
   onSubmit,
   isLoading,
@@ -97,7 +97,7 @@ const LoginForm = ({
               
               <div className="flex items-center border border-gray-200 rounded-xl px-3 py-2.5 bg-white focus-within:border-blue-400 focus-within:ring-1 focus-within:ring-blue-200 transition-all">
                 
-                <span className="text-gray-400 mr-2">:lock:</span>
+                <span className="text-gray-400 mr-2">🔒</span>
               
                 <input
                   type={showPassword ? "text" : "password"}
