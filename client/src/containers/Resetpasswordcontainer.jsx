@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import ResetPasswordForm from '../components/Resetpasswordform';
-import UserService from '../services/UserService';
+import UserService from '../services/UserService.js';
 
 const ResetPasswordContainer = () => {
   const navigate = useNavigate();
