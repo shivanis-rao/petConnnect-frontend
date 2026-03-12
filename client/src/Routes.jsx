@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
 import BrowsePetsPage from './pages/BrowsePetsPage';
+import PetDetailPage from './pages/PetDetailPage';
 import Navbar from './components/common/Navbar';
 
 const AppRoutes = () => {
@@ -10,6 +11,7 @@ const AppRoutes = () => {
       <Routes>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/browse" element={<BrowsePetsPage />} />
+        <Route path="/pets/:id" element={<PetDetailPage />} />
       </Routes>
     </BrowserRouter>
   );

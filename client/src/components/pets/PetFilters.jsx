@@ -1,3 +1,4 @@
+import useLocation from '../../hooks/useLocation';
 const PetFilters = ({ filters, onChange }) => {
 
   const handleChange = (field, value) => {
@@ -25,6 +26,7 @@ const PetFilters = ({ filters, onChange }) => {
       sort: 'newest',
     });
   };
+  const { getCity, locLoading, locError } = useLocation();
 
   return (
     <div className="w-64 shrink-0 bg-white rounded-2xl border border-gray-100 shadow-sm p-6 h-fit">
@@ -42,23 +44,58 @@ const PetFilters = ({ filters, onChange }) => {
 
       {/* LOCATION */}
       <div className="mb-5">
-        <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">
-          Location
-        </p>
-        <input
-          type="text"
-          placeholder="City"
-          value={filters.city || ''}
-          onChange={(e) => handleChange('city', e.target.value)}
-          className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-400 mb-2"
-        />
-        <input
-          type="text"
-          placeholder="Zipcode"
-          value={filters.zipcode || ''}
-          onChange={(e) => handleChange('zipcode', e.target.value)}
-          className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-400"
-        />
+       
+       
+<div className="mb-5">
+  <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">
+    Location
+  </p>
+  <input
+    type="text"
+    placeholder="City"
+    value={filters.city || ''}
+    onChange={(e) => handleChange('city', e.target.value)}
+    className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-400 mb-2"
+  />
+  <input
+    type="text"
+    placeholder="Zipcode"
+    value={filters.zipcode || ''}
+    onChange={(e) => handleChange('zipcode', e.target.value)}
+    className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-400 mb-2"
+  />
+
+  <button
+    onClick={async () => {
+  const result = await getCity();
+  if (result) {
+    onChange({
+      ...filters,
+      city: result.city,
+      zipcode: result.zipcode,
+      page: 1
+    });
+  }
+}}
+    disabled={locLoading}
+    className="w-full flex items-center justify-center gap-2 text-sm text-blue-600 border border-blue-200 rounded-lg py-2 hover:bg-blue-50 transition-colors disabled:opacity-50"
+  >
+    {locLoading ? (
+      <>
+        <span className="animate-spin">⏳</span> Detecting...
+      </>
+    ) : (
+      <>
+        📍 Use my location
+      </>
+    )}
+  </button>
+
+  {/* ERROR MESSAGE */}
+  {locError && (
+    <p className="text-xs text-red-500 mt-1">{locError}</p>
+  )}
+</div>
       </div>
 
       {/* SPECIES */}
@@ -122,26 +159,30 @@ const PetFilters = ({ filters, onChange }) => {
       </div>
 
       {/* GENDER */}
-      <div className="mb-5">
-        <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">
-          Gender
-        </p>
-        <div className="flex gap-2">
-          {['', 'Male', 'Female'].map((g) => (
-            <button
-              key={g}
-              onClick={() => handleChange('gender', g)}
-              className={`px-3 py-1 rounded-full text-sm border transition-colors duration-150
-                ${filters.gender === g
-                  ? 'bg-blue-600 text-white border-blue-600'
-                  : 'bg-white text-gray-600 border-gray-200 hover:border-blue-400'
-                }`}
-            >
-              {g === '' ? 'All' : g}
-            </button>
-          ))}
-        </div>
-      </div>
+<div className="mb-5">
+  <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">
+    Gender
+  </p>
+  <div className="flex gap-2">
+    {[
+      { label: 'All', value: '' },
+      { label: 'Male', value: 'male' },
+      { label: 'Female', value: 'female' },
+    ].map((g) => (
+      <button
+        key={g.value}
+        onClick={() => handleChange('gender', g.value)}
+        className={`px-3 py-1 rounded-full text-sm border transition-colors duration-150
+          ${filters.gender === g.value
+            ? 'bg-blue-600 text-white border-blue-600'
+            : 'bg-white text-gray-600 border-gray-200 hover:border-blue-400'
+          }`}
+      >
+        {g.label}
+      </button>
+    ))}
+  </div>
+</div>
 
       {/* TOGGLE FILTERS */}
       <div className="space-y-3">

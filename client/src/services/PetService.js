@@ -24,10 +24,10 @@ const PetService = {
     // returns { total, page, totalPages, pets: [...] }
   },
 
-  getPetById: async (id) => {
-    const response = await ApiService.get(`/shelter/pets/${id}`);
-    return response.data;
-  },
+getPetById: async (id) => {
+  const response = await ApiService.get(`/shelter/pets/public/${id}`);
+  return response.data;
+},
 };
 
 export default PetService;

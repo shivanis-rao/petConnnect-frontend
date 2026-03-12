@@ -1,4 +1,7 @@
+import { useNavigate } from 'react-router-dom';
+
 const PetCard = ({ pet }) => {
+    const navigate = useNavigate();
 
   const getVaccineBadgeColor = (vaccinated) => {
     return vaccinated
@@ -44,10 +47,12 @@ const PetCard = ({ pet }) => {
         </p>
 
         {/* View Details Button */}
-        <button className="w-full text-sm text-blue-600 border border-blue-600 rounded-lg py-2 hover:bg-blue-600 hover:text-white transition-colors duration-200">
-          View Details →
-        </button>
-
+         <button
+      onClick={() => navigate(`/pets/${pet.id}`)}
+      className="w-full text-sm text-blue-600 border border-blue-600 rounded-lg py-2 hover:bg-blue-600 hover:text-white transition-colors duration-200"
+    >
+      View Details →
+    </button>
       </div>
     </div>
   );
