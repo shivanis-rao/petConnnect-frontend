@@ -50,7 +50,7 @@ const UserService = {
     return response.data;
   },
 
-  // ✅ OTP — THIS WAS MISSING
+
   sendOtp: async (email) => {
     const response = await ApiService.post('/users/send-otp', { email });
     return response.data;

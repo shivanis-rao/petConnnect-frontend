@@ -16,7 +16,7 @@ const LoginContainer = () => {
      if (currentUser?.role === 'shelter') {
        navigate('/shelter/dashboard');
      } else {
-       navigate('/');
+       navigate('/browse');
      }
    }
  }, [isAuthenticated, currentUser, navigate]);
