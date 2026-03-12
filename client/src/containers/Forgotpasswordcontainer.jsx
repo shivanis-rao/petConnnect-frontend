@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import ForgotPasswordForm from '../components/Forgotpasswordform';
-import UserService from '../services/UserService';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import ForgotPasswordForm from "../components/Forgotpasswordform";
+import UserService from "../services/UserService";
 
 const ForgotPasswordContainer = () => {
   const navigate = useNavigate();
@@ -16,7 +16,10 @@ const ForgotPasswordContainer = () => {
       await UserService.forgotPassword(email);
       setSuccess(true);
     } catch (err) {
-      setError(err.response?.data?.message || 'Something went wrong. Please try again.');
+      setError(
+        err.response?.data?.message ||
+          "Something went wrong. Please try again.",
+      );
     } finally {
       setIsLoading(false);
     }
@@ -28,7 +31,7 @@ const ForgotPasswordContainer = () => {
       isLoading={isLoading}
       error={error}
       success={success}
-      onBackToLogin={() => navigate('/login')}
+      onBackToLogin={() => navigate("/login")}
     />
   );
 };
