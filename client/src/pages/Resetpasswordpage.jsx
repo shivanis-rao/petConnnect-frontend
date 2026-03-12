@@ -1,4 +1,4 @@
-import ResetPasswordContainer from '../containers/Resetpasswordcontainer';
+import ResetPasswordContainer from "../containers/Resetpasswordcontainer";
 
 const ResetPasswordPage = () => {
   return <ResetPasswordContainer />;
