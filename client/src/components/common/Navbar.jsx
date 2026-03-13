@@ -50,7 +50,7 @@ const Navbar = () => {
           </Link>
         )}
 
-        {isAuthenticated && (
+        {isAuthenticated && currentUser?.role==='adopter' &&(
           <Link
             to="/my-applications"
             className="text-gray-600 hover:text-blue-600 text-sm font-medium"
