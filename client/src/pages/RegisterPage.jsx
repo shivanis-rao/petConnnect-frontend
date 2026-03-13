@@ -75,8 +75,7 @@ export default function RegisterPage() {
 
     setLoading(true);
     try {
-
-      const res = await UserService.register({
+      const res=await UserService.register({
       firstName: formData.firstName,
       lastName: formData.lastName,
       phoneNumber: formData.phoneNumber,
@@ -84,6 +83,7 @@ export default function RegisterPage() {
       password: formData.password,
       confirmPassword: formData.confirmPassword,
       });
+      
       const loginRes = await UserService.login({
       email: formData.email,
       password: formData.password

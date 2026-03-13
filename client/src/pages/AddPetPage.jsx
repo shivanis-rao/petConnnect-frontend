@@ -121,7 +121,7 @@ function TextareaField({ placeholder, value, onChange, rows = 4 }) {
 
 // ── PHOTO UPLOAD ───────────────────────────────────────────────────────────
 function PhotoSlot({ label, file, onUpload, onRemove }) {
-  const ref = { current: null }
+  
   return (
     <div onClick={() => document.getElementById(`photo-${label}`).click()}
       className="relative border-2 border-dashed border-gray-200 rounded-lg h-28 flex flex-col items-center justify-center cursor-pointer hover:border-[#3B6B8A]/40 transition-all bg-gray-50">

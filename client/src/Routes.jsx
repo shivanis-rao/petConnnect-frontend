@@ -9,6 +9,7 @@ import RegisterPage from './pages/RegisterPage';
 import ProfileCompletionPage from './pages/ProfileCompletionPage';
 import AddPetPage from './pages/AddPetPage'
 import NgoDashboard from './pages/NGODashboard';
+import EditPetPage from './pages/EditPetPage'
 
 const AppRoutes = () => {
   return (
@@ -24,6 +25,7 @@ const AppRoutes = () => {
         <Route path="/pets/:id" element={<PetDetailPage />} />
         <Route path="/shelter/pets/add" element={<AddPetPage />} />
         <Route path="/shelter/pets" element={<NgoDashboard />} />
+        <Route path="/shelter/pets/:id/edit" element={<EditPetPage />} />
        
       </Routes>
     </BrowserRouter>
