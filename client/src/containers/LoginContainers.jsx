@@ -7,17 +7,6 @@ const LoginContainer = () => {
   const navigate = useNavigate();
   const { login, isLoading, error, isAuthenticated, currentUser } = useAuth();
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      if (currentUser?.role === 'shelter') {
-        navigate('/shelter/pets');
-      } else if (currentUser?.role === 'admin') {
-        navigate('/admin/dashboard');
-      } else {
-        navigate('/browse');
-      }
-    }
-  }, [isAuthenticated, currentUser, navigate]);
 
   const handleLogin = async (email, password) => {
     const result = await login({ email, password });
