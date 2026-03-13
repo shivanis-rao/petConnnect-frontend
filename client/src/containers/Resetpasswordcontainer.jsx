@@ -23,18 +23,11 @@ const ResetPasswordContainer = () => {
     try {
       const result = await UserService.resetPassword(token, newPassword);
       if (result.success) {
-        // Auto login — save session
-        UserService.saveSession(result.data);
-        localStorage.setItem('auth_event', JSON.stringify({
-        type: 'LOGIN',
-        user: result.data.user,
-        timestamp: Date.now()
-        
-      }));
+      
       setSuccess(true);
       setTimeout(() => {
         window.close(); // close the reset tab
-      }, 3000);
+      }, 5000);
         // // Redirect based on role
         // if (result.data.user?.role === 'shelter') {
         //   navigate('/shelter/dashboard');
