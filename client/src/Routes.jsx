@@ -17,19 +17,17 @@ import WaitingPage from './pages/WaitingPage';
 import NgoDashboard from './pages/NGODashboard';
 import EditPetPage from './pages/EditPetPage'
 
-const AppRoutes = () => {
+const AppRoutes = () => {  
   return (
     <BrowserRouter>
       <Navbar />
       <Routes>
 
-        {/* PUBLIC */}
+        {/*Public (no login needed) */}
         <Route path="/" element={<Navigate to="/browse" replace />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
-        <Route path="/browse" element={<BrowsePetsPage />} />
         <Route path="/pets/:id" element={<PetDetailPage />} />
-
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/reset-password" element={<ResetPasswordPage />} />
         <Route path="/unauthorized" element={<UnauthorizedPage />} />
@@ -39,9 +37,10 @@ const AppRoutes = () => {
           <Route path="/complete-profile" element={<ProfileCompletionPage />} />
         </Route>
 
-        {/* ADOPTER ONLY */}
+        {/* Adopter only */}
         <Route element={<ProtectedRoute roles={['adopter']} />}>
-          <Route path="/my-adoptions" element={<div>My Adoptions</div>} />
+          <Route path="/browse" element={<BrowsePetsPage />} />
+          <Route path="/my-applications" element={<div>My Adoptions</div>} />
         </Route>
 
         {/* SHELTER + ADMIN */}
@@ -62,8 +61,8 @@ const AppRoutes = () => {
           <Route path="/admin/shelters" element={<div>Manage Shelters</div>} />
         </Route>
 
-        {/* CATCH ALL */}
-        <Route path="*" element={<Navigate to="/browse" replace />} />
+        {/* Catch all */}
+        <Route path="*" element={<Navigate to="/unauthorized" replace />} />
 
 
       </Routes>

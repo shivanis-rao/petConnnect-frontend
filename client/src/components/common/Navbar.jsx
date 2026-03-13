@@ -40,12 +40,15 @@ const Navbar = () => {
         >
           Home
         </Link>
-        <Link
-          to="/browse"
-          className="text-gray-600 hover:text-blue-600 text-sm font-medium"
-        >
-          Browse Pets
-        </Link>
+        
+        {currentUser?.role === 'adopter' && (
+          <Link
+            to="/browse"
+            className="text-gray-600 hover:text-blue-600 text-sm font-medium"
+          >
+            Browse Pets
+          </Link>
+        )}
 
         {isAuthenticated && (
           <Link
