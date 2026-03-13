@@ -15,6 +15,7 @@ import ShelterBasePage from './pages/ShelterBasePage';
 import NgoRegistration from './pages/NgoRegistration';
 import WaitingPage from './pages/WaitingPage';
 import NgoDashboard from './pages/NGODashboard';
+import EditPetPage from './pages/EditPetPage'
 
 const AppRoutes = () => {
   return (
@@ -28,6 +29,7 @@ const AppRoutes = () => {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/browse" element={<BrowsePetsPage />} />
         <Route path="/pets/:id" element={<PetDetailPage />} />
+
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/reset-password" element={<ResetPasswordPage />} />
         <Route path="/unauthorized" element={<UnauthorizedPage />} />
@@ -61,6 +63,7 @@ const AppRoutes = () => {
 
         {/* CATCH ALL */}
         <Route path="*" element={<Navigate to="/browse" replace />} />
+
 
       </Routes>
     </BrowserRouter>

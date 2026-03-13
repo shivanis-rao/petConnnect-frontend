@@ -87,11 +87,18 @@ export default function RegisterPage() {
       });
       const loginRes = await UserService.login({
 
+
       email: formData.email,
       password: formData.password,
       confirmPassword: formData.confirmPassword,
       });
-     
+
+      
+      const loginRes = await UserService.login({
+      email: formData.email,
+      password: formData.password
+    });
+
 
       console.log("Login response:", loginRes);
       console.log("Access token:", loginRes.data?.accessToken);
