@@ -35,15 +35,14 @@ const processQueue = (error, token = null) => {
 };
 
 api.interceptors.response.use(
-  (response) => response, // if response is fine just return it
+  (response) => response,
 
   async (error) => {
     const originalRequest = error.config;
 
-    // If 401 and we haven't already retried this request
+    // 401 — token expired, try refresh
     if (error.response?.status === 401 && !originalRequest._retry) {
       if (isRefreshing) {
-        // If already refreshing, queue this request
         return new Promise((resolve, reject) => {
           failedQueue.push({ resolve, reject });
         })
@@ -60,7 +59,6 @@ api.interceptors.response.use(
       const refreshToken = localStorage.getItem("refreshToken");
 
       if (!refreshToken) {
-        // No refresh token — force logout
         localStorage.removeItem("accessToken");
         localStorage.removeItem("refreshToken");
         localStorage.removeItem("user");
@@ -69,7 +67,6 @@ api.interceptors.response.use(
       }
 
       try {
-        // Call your refresh token endpoint
         const response = await axios.post(`${BASE_URL}/users/refresh-token`, {
           refreshToken,
         });
@@ -77,14 +74,11 @@ api.interceptors.response.use(
         const newAccessToken = response.data.data.accessToken;
         localStorage.setItem("accessToken", newAccessToken);
 
-        // Retry all queued requests with new token
         processQueue(null, newAccessToken);
 
-        // Retry the original failed request
         originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
         return api(originalRequest);
       } catch (refreshError) {
-        // Refresh token also expired — force logout
         processQueue(refreshError, null);
         localStorage.removeItem("accessToken");
         localStorage.removeItem("refreshToken");
@@ -96,17 +90,20 @@ api.interceptors.response.use(
       }
     }
 
+    // 403 — not authorized for this role
+    if (error.response?.status === 403) {
+      window.location.href = "/unauthorized";
+      return Promise.reject(error);
+    }
+
     return Promise.reject(error);
   },
 );
 
-// const get = (url) => api.get(url);
-// const post = (url, data) => api.post(url, data);
-// const put = (url, data) => api.put(url, data);
-// const del = (url) => api.delete(url);
-
 const get = (url, config = {}) => api.get(url, config);
 const post = (url, data, config = {}) => api.post(url, data, config);
 const put = (url, data, config = {}) => api.put(url, data, config);
+const patch = (url, data, config = {}) => api.patch(url, data, config);
 const del = (url, config = {}) => api.delete(url, config);
-export default { get, post, put, del };
+
+export default { get, post, put, patch, del };

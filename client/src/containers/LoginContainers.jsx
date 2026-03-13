@@ -1,19 +1,20 @@
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import LoginForm from "../components/LoginForm";
-import useAuth from "../hooks/useAuth";
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import LoginForm from '../components/LoginForm';
+import useAuth from '../hooks/useAuth';
 
 const LoginContainer = () => {
   const navigate = useNavigate();
-  const { login, isLoading, error, isAuthenticated, currentUser } = useAuth();
+  const { login, isLoading, error, isAuthenticated, currentUser, clearError } = useAuth();
 
   useEffect(() => {
     if (isAuthenticated) {
-      // Redirect based on role
-      if (currentUser?.role === "shelter") {
-        navigate("/shelter/dashboard");
+      if (currentUser?.role === 'shelter') {
+        navigate('/shelter/pets');
+      } else if (currentUser?.role === 'admin') {
+        navigate('/admin/dashboard');
       } else {
-        navigate("/browse");
+        navigate('/browse');
       }
     }
   }, [isAuthenticated, currentUser, navigate]);
@@ -21,21 +22,22 @@ const LoginContainer = () => {
   const handleLogin = async (email, password) => {
     const result = await login({ email, password });
     if (result.success) {
-      // Redirect based on role after login
-      if (result.user?.role === "shelter") {
-        navigate("/shelter/dashboard");
+      if (result.user?.role === 'shelter') {
+        navigate('/shelter/pets');
+      } else if (result.user?.role === 'admin') {
+        navigate('/admin/dashboard');
       } else {
-        navigate("/");
+        navigate('/browse');
       }
     }
   };
 
   const handleForgotPassword = () => {
-    navigate("/forgot-password");
+    navigate('/forgot-password');
   };
 
   const handleCreateAccount = () => {
-    navigate("/register");
+    navigate('/register');
   };
 
   return (
