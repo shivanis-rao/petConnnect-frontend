@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate,Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import UserService from "../services/UserService";
 
 export default function RegisterPage() {
@@ -76,6 +76,7 @@ export default function RegisterPage() {
     setLoading(true);
     try {
 
+
       const res=await UserService.register({
         firstName: formData.firstName,
         lastName: formData.lastName,
@@ -85,15 +86,21 @@ export default function RegisterPage() {
         confirmPassword: formData.confirmPassword
       });
       const loginRes = await UserService.login({
+
       email: formData.email,
-      password: formData.password
-    });
+      password: formData.password,
+      confirmPassword: formData.confirmPassword,
+      });
+      const loginRes = await UserService.login({
+        email: formData.email,
+        password: formData.password,
+      });
 
-    console.log("Login response:", loginRes); 
-    console.log("Access token:", loginRes.data?.accessToken); 
+      console.log("Login response:", loginRes);
+      console.log("Access token:", loginRes.data?.accessToken);
 
-    UserService.saveSession(loginRes.data);
-    localStorage.setItem("userId", loginRes.data.user.id);
+      UserService.saveSession(loginRes.data);
+      localStorage.setItem("userId", loginRes.data.user.id);
 
       navigate("/complete-profile");
     } catch (err) {
@@ -105,11 +112,8 @@ export default function RegisterPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      
-
       {/* Main Content */}
       <div className="max-w-6xl mx-auto px-8 py-10 flex gap-10 items-start">
-
         {/* Left Panel */}
         <div className="w-[480px] flex-shrink-0 rounded-2xl overflow-hidden relative h-[600px]">
           <div className="absolute inset-0 bg-gradient-to-b from-cyan-400 to-teal-600 opacity-80 z-10" />
@@ -119,28 +123,39 @@ export default function RegisterPage() {
             className="w-full h-full object-cover"
           />
           <div className="absolute bottom-0 left-0 right-0 p-8 z-20 text-white">
-            <h2 className="text-3xl font-bold mb-3">Find your new best friend</h2>
+            <h2 className="text-3xl font-bold mb-3">
+              Find your new best friend
+            </h2>
             <p className="text-white/80 text-sm leading-relaxed">
-              Join thousands of pet lovers who have found their perfect companions
-              through PetConnect. Start your journey today.
+              Join thousands of pet lovers who have found their perfect
+              companions through PetConnect. Start your journey today.
             </p>
             <div className="flex items-center gap-3 mt-5">
               <div className="flex -space-x-2">
                 {["👤", "👥", "🧑"].map((e, i) => (
-                  <div key={i} className="w-8 h-8 rounded-full bg-white/30 flex items-center justify-center text-xs border-2 border-white">
+                  <div
+                    key={i}
+                    className="w-8 h-8 rounded-full bg-white/30 flex items-center justify-center text-xs border-2 border-white"
+                  >
                     {e}
                   </div>
                 ))}
               </div>
-              <span className="text-sm text-white/90">Joined by 10k+ pet parents</span>
+              <span className="text-sm text-white/90">
+                Joined by 10k+ pet parents
+              </span>
             </div>
           </div>
         </div>
 
         {/* Right Panel — Form */}
         <div className="flex-1 bg-white rounded-2xl shadow-sm p-10">
-          <h1 className="text-2xl font-bold text-gray-900 mb-1">Create Your Account</h1>
-          <p className="text-gray-500 text-sm mb-7">Start your journey with a new furry friend</p>
+          <h1 className="text-2xl font-bold text-gray-900 mb-1">
+            Create Your Account
+          </h1>
+          <p className="text-gray-500 text-sm mb-7">
+            Start your journey with a new furry friend
+          </p>
 
           {error && (
             <div className="bg-red-50 border border-red-200 text-red-600 text-sm px-4 py-3 rounded-lg mb-5">
@@ -154,7 +169,6 @@ export default function RegisterPage() {
           )}
 
           <form onSubmit={handleSubmit} className="space-y-5">
-
             {/* First Name + Last Name */}
             <div className="grid grid-cols-2 gap-4">
               <div>
@@ -219,7 +233,9 @@ export default function RegisterPage() {
                     className="flex-1 text-sm focus:outline-none"
                   />
                   {otpVerified && (
-                    <span className="text-green-500 text-xs font-semibold">✓ Verified</span>
+                    <span className="text-green-500 text-xs font-semibold">
+                      ✓ Verified
+                    </span>
                   )}
                 </div>
                 <button
@@ -228,7 +244,11 @@ export default function RegisterPage() {
                   disabled={otpLoading || otpVerified}
                   className="bg-cyan-500 hover:bg-cyan-600 text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition disabled:opacity-50 whitespace-nowrap"
                 >
-                  {otpLoading ? "Sending..." : otpVerified ? "Verified" : "Send OTP"}
+                  {otpLoading
+                    ? "Sending..."
+                    : otpVerified
+                      ? "Verified"
+                      : "Send OTP"}
                 </button>
               </div>
             </div>
@@ -308,12 +328,14 @@ export default function RegisterPage() {
             >
               {loading ? "Creating Account..." : "Create Account"}
             </button>
-
           </form>
 
           <p className="text-center text-sm text-gray-500 mt-6">
             Already have an account?{" "}
-            <Link to="/login" className="text-cyan-500 font-semibold hover:underline">
+            <Link
+              to="/login"
+              className="text-cyan-500 font-semibold hover:underline"
+            >
               Log in
             </Link>
           </p>

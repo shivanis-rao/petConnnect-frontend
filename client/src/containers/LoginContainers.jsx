@@ -10,11 +10,11 @@ const LoginContainer = () => {
   useEffect(() => {
     if (isAuthenticated) {
       if (currentUser?.role === 'shelter') {
-        navigate('/shelter/dashboard');
+        navigate('/shelter/pets');
       } else if (currentUser?.role === 'admin') {
         navigate('/admin/dashboard');
       } else {
-        navigate('/browse');              // ← adopter
+        navigate('/browse');
       }
     }
   }, [isAuthenticated, currentUser, navigate]);
@@ -23,13 +23,21 @@ const LoginContainer = () => {
     const result = await login({ email, password });
     if (result.success) {
       if (result.user?.role === 'shelter') {
-        navigate('/shelter/dashboard');
+        navigate('/shelter/pets');
       } else if (result.user?.role === 'admin') {
         navigate('/admin/dashboard');
       } else {
-        navigate('/browse');              // ← adopter
+        navigate('/browse');
       }
     }
+  };
+
+  const handleForgotPassword = () => {
+    navigate('/forgot-password');
+  };
+
+  const handleCreateAccount = () => {
+    navigate('/register');
   };
 
   return (
@@ -37,8 +45,8 @@ const LoginContainer = () => {
       onSubmit={handleLogin}
       isLoading={isLoading}
       error={error}
-      onForgotPassword={() => navigate('/forgot-password')}
-      onCreateAccount={() => navigate('/register')}
+      onForgotPassword={handleForgotPassword}
+      onCreateAccount={handleCreateAccount}
     />
   );
 };

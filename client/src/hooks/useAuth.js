@@ -1,77 +1,54 @@
-import { useState, useEffect, createContext, useContext } from 'react';
-import UserService from '../services/UserService';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import LoginForm from '../components/LoginForm';
+import useAuth from '../hooks/useAuth';
 
-export const AuthContext = createContext(null);
-
-export const useAuthState = () => {
-  const [currentUser, setCurrentUser] = useState(null);
-  const [isLoading,   setIsLoading]   = useState(false);
-  const [error,       setError]       = useState(null);
-  const [isBootstrapping, setIsBootstrapping] = useState(true);
+const LoginContainer = () => {
+  const navigate = useNavigate();
+  const { login, isLoading, error, isAuthenticated, currentUser, clearError } = useAuth();
 
   useEffect(() => {
-    const savedUser = UserService.getCurrentUser();
-    if (savedUser) setCurrentUser(savedUser);
-    setIsBootstrapping(false);
-  }, []);
-
-  const login = async (payload) => {
-    setIsLoading(true);
-    setError(null);
-    try {
-      const result = await UserService.login(payload);
-      if (result.success) {
-        UserService.saveSession(result.data);
-        setCurrentUser(result.data.user);
-        setIsLoading(false);
-        return { success: true, user: result.data.user };
+    if (isAuthenticated) {
+      if (currentUser?.role === 'shelter') {
+        navigate('/shelter/pets');
+      } else if (currentUser?.role === 'admin') {
+        navigate('/admin/dashboard');
       } else {
-        setError(result.message || 'Login failed');
-        setIsLoading(false);
-        return { success: false };
+        navigate('/browse');
       }
-    } catch (err) {
-      const message =
-        err.response?.data?.message || err.message || 'Login failed.';
-      setError(message);
-      setIsLoading(false);
-      return { success: false };
+    }
+  }, [isAuthenticated, currentUser, navigate]);
+
+  const handleLogin = async (email, password) => {
+    const result = await login({ email, password });
+    if (result.success) {
+      if (result.user?.role === 'shelter') {
+        navigate('/shelter/pets');
+      } else if (result.user?.role === 'admin') {
+        navigate('/admin/dashboard');
+      } else {
+        navigate('/browse');
+      }
     }
   };
 
-  const logout = () => {
-    UserService.logout();
-    setCurrentUser(null);
+  const handleForgotPassword = () => {
+    navigate('/forgot-password');
   };
 
-  const clearError = () => setError(null);
-
-  const isAdmin   = currentUser?.role === 'admin';
-  const isShelter = currentUser?.role === 'shelter';
-  const isAdopter = currentUser?.role === 'adopter';
-  const hasRole   = (...roles) =>
-    Boolean(currentUser) && roles.includes(currentUser.role);
-
-  return {
-    currentUser,
-    isLoading,
-    isBootstrapping,
-    error,
-    isAuthenticated: Boolean(currentUser),
-    isAdmin,
-    isShelter,
-    isAdopter,
-    hasRole,
-    login,
-    logout,
-    clearError,
+  const handleCreateAccount = () => {
+    navigate('/register');
   };
+
+  return (
+    <LoginForm
+      onSubmit={handleLogin}
+      isLoading={isLoading}
+      error={error}
+      onForgotPassword={handleForgotPassword}
+      onCreateAccount={handleCreateAccount}
+    />
+  );
 };
 
-const useAuth = () => {
-  const ctx = useContext(AuthContext);
-  if (!ctx) throw new Error('useAuth must be used inside <AuthProvider>');
-  return ctx;
-};
-
-export default useAuth;
+export default LoginContainer;
