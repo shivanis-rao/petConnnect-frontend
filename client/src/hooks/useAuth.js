@@ -1,54 +1,53 @@
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import LoginForm from '../components/LoginForm';
-import useAuth from '../hooks/useAuth';
+import { useState } from "react";
+import UserService from "../services/UserService";
 
-const LoginContainer = () => {
-  const navigate = useNavigate();
-  const { login, isLoading, error, isAuthenticated, currentUser, clearError } = useAuth();
+const useAuth = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      if (currentUser?.role === 'shelter') {
-        navigate('/shelter/pets');
-      } else if (currentUser?.role === 'admin') {
-        navigate('/admin/dashboard');
+  const login = async (payload) => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      const result = await UserService.login(payload);
+      // result = { success, message, data: { accessToken, refreshToken, user } }
+      if (result.success) {
+        UserService.saveSession(result.data);
+        setIsLoading(false);
+        return { success: true, user: result.data.user };
       } else {
-        navigate('/browse');
+        setError(result.message || "Login failed");
+        setIsLoading(false);
+        return { success: false };
       }
-    }
-  }, [isAuthenticated, currentUser, navigate]);
-
-  const handleLogin = async (email, password) => {
-    const result = await login({ email, password });
-    if (result.success) {
-      if (result.user?.role === 'shelter') {
-        navigate('/shelter/pets');
-      } else if (result.user?.role === 'admin') {
-        navigate('/admin/dashboard');
-      } else {
-        navigate('/browse');
-      }
+    } catch (err) {
+      const message =
+        err.response?.data?.message ||
+        err.message ||
+        "Login failed. Please try again.";
+      setError(message);
+      setIsLoading(false);
+      return { success: false };
     }
   };
 
-  const handleForgotPassword = () => {
-    navigate('/forgot-password');
+  const logout = () => {
+    UserService.logout();
   };
 
-  const handleCreateAccount = () => {
-    navigate('/register');
+  const clearError = () => {
+    setError(null);
   };
 
-  return (
-    <LoginForm
-      onSubmit={handleLogin}
-      isLoading={isLoading}
-      error={error}
-      onForgotPassword={handleForgotPassword}
-      onCreateAccount={handleCreateAccount}
-    />
-  );
+  return {
+    isLoading,
+    error,
+    login,
+    logout,
+    clearError,
+    isAuthenticated: UserService.isAuthenticated(),
+    currentUser: UserService.getCurrentUser(),
+  };
 };
 
-export default LoginContainer;
+export default useAuth;

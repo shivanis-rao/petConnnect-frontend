@@ -5,7 +5,7 @@ import useAuth from '../hooks/useAuth';
 
 const LoginContainer = () => {
   const navigate = useNavigate();
-  const { login, isLoading, error, isAuthenticated, currentUser, clearError } = useAuth();
+  const { login, isLoading, error, isAuthenticated, currentUser } = useAuth();
 
   useEffect(() => {
     if (isAuthenticated) {
