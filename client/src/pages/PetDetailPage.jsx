@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import PetService from "../services/PetService";
+import UserService from "../services/UserService";
 
 const PetDetailPage = () => {
   const { id } = useParams();
@@ -8,6 +9,14 @@ const PetDetailPage = () => {
   const [pet, setPet] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const handleAdopt = () => {
+    if (!UserService.isAuthenticated()) {
+      navigate("/login", { state: { from: `/pets/${id}` } });
+      return;
+    }
+    navigate(`/pets/${id}/apply`);
+  };
 
   useEffect(() => {
     const fetchPet = async () => {
@@ -210,7 +219,7 @@ const PetDetailPage = () => {
 
               {/* Apply Button */}
               <button
-                onClick={() => alert("Application feature coming soon!")}
+                onClick={handleAdopt}
                 className="w-full bg-blue-600 text-white py-3 rounded-xl font-medium hover:bg-blue-700 transition-colors text-sm"
               >
                 Apply for Adoption →

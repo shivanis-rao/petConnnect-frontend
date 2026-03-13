@@ -13,6 +13,7 @@ export default function RegisterPage() {
     otp: "",
     password: "",
     confirmPassword: "",
+    role: "adopter",
   });
 
   const [otpSent, setOtpSent] = useState(false);
@@ -75,6 +76,16 @@ export default function RegisterPage() {
 
     setLoading(true);
     try {
+      await UserService.register({
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        phoneNumber: formData.phoneNumber,
+        email: formData.email,
+        password: formData.password,
+        confirmPassword: formData.confirmPassword,
+        role: formData.role,
+      });
+
       const loginRes = await UserService.login({
         email: formData.email,
         password: formData.password,
@@ -85,8 +96,13 @@ export default function RegisterPage() {
 
       UserService.saveSession(loginRes.data);
       localStorage.setItem("userId", loginRes.data.user.id);
+      localStorage.setItem("role", loginRes.data.user.role);
 
-      navigate("/complete-profile");
+      if (loginRes.data.user.role === "shelter") {
+        navigate("/shelter-register"); // shelter setup page
+      } else {
+        navigate("/complete-profile"); // adopter profile page
+      }
     } catch (err) {
       setError(err.response?.data?.message || "Registration failed");
     } finally {
@@ -96,10 +112,9 @@ export default function RegisterPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Main Content */}
-      <div className="max-w-6xl mx-auto px-8 py-10 flex gap-10 items-start">
-        {/* Left Panel */}
-        <div className="w-[480px] flex-shrink-0 rounded-2xl overflow-hidden relative h-[600px]">
+      <div className="max-w-6xl mx-auto px-4 py-8 flex flex-col md:flex-row gap-8 items-start">
+        {/* Left Panel — hidden on mobile */}
+        <div className="hidden md:block w-[480px] flex-shrink-0 rounded-2xl overflow-hidden relative h-[600px]">
           <div className="absolute inset-0 bg-gradient-to-b from-cyan-400 to-teal-600 opacity-80 z-10" />
           <img
             src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=600&auto=format&fit=crop"
@@ -132,8 +147,8 @@ export default function RegisterPage() {
           </div>
         </div>
 
-        {/* Right Panel — Form */}
-        <div className="flex-1 bg-white rounded-2xl shadow-sm p-10">
+        {/* Right Panel — Form (full width on mobile) */}
+        <div className="flex-1 w-full bg-white rounded-2xl shadow-sm p-6 md:p-10">
           <h1 className="text-2xl font-bold text-gray-900 mb-1">
             Create Your Account
           </h1>
@@ -154,7 +169,7 @@ export default function RegisterPage() {
 
           <form onSubmit={handleSubmit} className="space-y-5">
             {/* First Name + Last Name */}
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label className="block text-xs font-semibold text-gray-600 uppercase tracking-wide mb-1.5">
                   First Name
@@ -166,7 +181,7 @@ export default function RegisterPage() {
                   onChange={handleChange}
                   placeholder="John"
                   required
-                  className="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-transparent"
+                  className="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-400"
                 />
               </div>
               <div>
@@ -179,7 +194,7 @@ export default function RegisterPage() {
                   value={formData.lastName}
                   onChange={handleChange}
                   placeholder="Doe"
-                  className="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-transparent"
+                  className="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-400"
                 />
               </div>
             </div>
@@ -195,7 +210,7 @@ export default function RegisterPage() {
                 value={formData.phoneNumber}
                 onChange={handleChange}
                 placeholder="00000-00000"
-                className="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-transparent"
+                className="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-400"
               />
             </div>
 
@@ -214,10 +229,10 @@ export default function RegisterPage() {
                     onChange={handleChange}
                     placeholder="you@example.com"
                     required
-                    className="flex-1 text-sm focus:outline-none"
+                    className="flex-1 text-sm focus:outline-none min-w-0"
                   />
                   {otpVerified && (
-                    <span className="text-green-500 text-xs font-semibold">
+                    <span className="text-green-500 text-xs font-semibold whitespace-nowrap">
                       ✓ Verified
                     </span>
                   )}
@@ -226,7 +241,7 @@ export default function RegisterPage() {
                   type="button"
                   onClick={handleSendOtp}
                   disabled={otpLoading || otpVerified}
-                  className="bg-cyan-500 hover:bg-cyan-600 text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition disabled:opacity-50 whitespace-nowrap"
+                  className="bg-cyan-500 hover:bg-cyan-600 text-white text-sm font-semibold px-4 py-2.5 rounded-lg transition disabled:opacity-50 whitespace-nowrap"
                 >
                   {otpLoading
                     ? "Sending..."
@@ -237,7 +252,7 @@ export default function RegisterPage() {
               </div>
             </div>
 
-            {/* OTP Field — shows after OTP sent */}
+            {/* OTP Field */}
             {otpSent && !otpVerified && (
               <div>
                 <label className="block text-xs font-semibold text-gray-600 uppercase tracking-wide mb-1.5">
@@ -273,7 +288,7 @@ export default function RegisterPage() {
             )}
 
             {/* Password + Confirm */}
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label className="block text-xs font-semibold text-gray-600 uppercase tracking-wide mb-1.5">
                   Password
@@ -285,7 +300,7 @@ export default function RegisterPage() {
                   onChange={handleChange}
                   placeholder="••••••••"
                   required
-                  className="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-transparent"
+                  className="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-400"
                 />
               </div>
               <div>
@@ -299,8 +314,49 @@ export default function RegisterPage() {
                   onChange={handleChange}
                   placeholder="••••••••"
                   required
-                  className="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-transparent"
+                  className="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-400"
                 />
+              </div>
+            </div>
+
+            {/* Role Selector */}
+            <div>
+              <label className="block text-xs font-semibold text-gray-600 uppercase tracking-wide mb-3">
+                I am registering as
+              </label>
+              <div className="grid grid-cols-2 gap-3">
+                {[
+                  {
+                    value: "adopter",
+                    icon: "🏠",
+                    label: "Adopter",
+                    desc: "Looking to adopt a pet",
+                  },
+                  {
+                    value: "shelter",
+                    icon: "🏥",
+                    label: "Shelter",
+                    desc: "Managing a shelter",
+                  },
+                ].map((opt) => (
+                  <button
+                    key={opt.value}
+                    type="button"
+                    onClick={() =>
+                      setFormData({ ...formData, role: opt.value })
+                    }
+                    className={`border-2 rounded-xl p-4 flex flex-col items-start gap-1 transition
+                    ${formData.role === opt.value ? "border-cyan-500 bg-cyan-50" : "border-gray-200 hover:border-gray-300"}`}
+                  >
+                    <span className="text-2xl">{opt.icon}</span>
+                    <span
+                      className={`text-sm font-semibold ${formData.role === opt.value ? "text-cyan-600" : "text-gray-700"}`}
+                    >
+                      {opt.label}
+                    </span>
+                    <span className="text-xs text-gray-400">{opt.desc}</span>
+                  </button>
+                ))}
               </div>
             </div>
 

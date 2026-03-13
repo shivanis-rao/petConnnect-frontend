@@ -63,9 +63,9 @@ export default function ProfileCompletionPage() {
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
-      <div className="flex-1 max-w-6xl mx-auto px-8 py-10 flex gap-10 items-start w-full">
-        {/* Left Panel */}
-        <div className="w-[420px] flex-shrink-0 rounded-2xl overflow-hidden relative h-[520px]">
+      <div className="flex-1 max-w-6xl mx-auto px-4 py-8 flex flex-col md:flex-row gap-8 items-start w-full">
+        {/* Left Panel — hidden on mobile */}
+        <div className="hidden md:block w-[420px] flex-shrink-0 rounded-2xl overflow-hidden relative h-[520px]">
           <div className="absolute inset-0 bg-gradient-to-b from-gray-700/60 to-gray-900/80 z-10" />
           <img
             src="https://images.unsplash.com/photo-1450778869180-41d0601e046e?w=600&auto=format&fit=crop"
@@ -96,13 +96,13 @@ export default function ProfileCompletionPage() {
                   <div key={s.num} className="flex items-center gap-3">
                     <div
                       className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold
-                      ${s.done || s.active ? "bg-cyan-500 text-white" : "bg-white/20 text-white/50"}`}
+                    ${s.done || s.active ? "bg-cyan-500 text-white" : "bg-white/20 text-white/50"}`}
                     >
                       {s.num}
                     </div>
                     <span
                       className={`text-sm font-medium
-                      ${s.active ? "text-white" : s.done ? "text-white/80" : "text-white/40"}`}
+                    ${s.active ? "text-white" : s.done ? "text-white/80" : "text-white/40"}`}
                     >
                       {s.label}
                     </span>
@@ -113,8 +113,16 @@ export default function ProfileCompletionPage() {
           </div>
         </div>
 
-        {/* Right Panel */}
-        <div className="flex-1 bg-white rounded-2xl shadow-sm p-10">
+        {/* Right Panel — full width on mobile */}
+        <div className="flex-1 w-full bg-white rounded-2xl shadow-sm p-6 md:p-10">
+          {/* Mobile step indicator */}
+          <div className="flex items-center gap-2 mb-4 md:hidden">
+            <span className="w-2 h-2 rounded-full bg-cyan-400" />
+            <span className="text-xs font-semibold text-cyan-600 uppercase tracking-wide">
+              Step 2: Profile Completion
+            </span>
+          </div>
+
           <h1 className="text-2xl font-bold text-gray-900 mb-1">
             Complete Your Profile
           </h1>
@@ -129,7 +137,7 @@ export default function ProfileCompletionPage() {
           )}
 
           <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label className="block text-xs font-semibold text-gray-600 uppercase tracking-wide mb-1.5">
                   Location
@@ -172,11 +180,7 @@ export default function ProfileCompletionPage() {
                     type="button"
                     onClick={() => handleSpecies(opt.value)}
                     className={`border-2 rounded-xl p-4 flex flex-col items-center gap-2 transition
-                      ${
-                        formData.preferred_species === opt.value
-                          ? "border-cyan-500 bg-cyan-50"
-                          : "border-gray-200 hover:border-gray-300"
-                      }`}
+                    ${formData.preferred_species === opt.value ? "border-cyan-500 bg-cyan-50" : "border-gray-200 hover:border-gray-300"}`}
                   >
                     <div className="relative">
                       <span className="text-3xl">{opt.icon}</span>
@@ -233,14 +237,14 @@ export default function ProfileCompletionPage() {
       </div>
 
       {/* Footer */}
-      <footer className="bg-white border-t border-gray-100 px-8 py-5 flex items-center justify-between">
+      <footer className="bg-white border-t border-gray-100 px-6 py-5 flex flex-col md:flex-row items-center justify-between gap-3">
         <div className="flex items-center gap-2">
           <span className="text-cyan-500">🐾</span>
           <span className="text-cyan-500 font-semibold text-sm">
             PetConnect
           </span>
         </div>
-        <span className="text-gray-400 text-xs">
+        <span className="text-gray-400 text-xs text-center">
           © 2026 PetConnect Adoption Services. All rights reserved.
         </span>
         <div className="flex gap-4">
