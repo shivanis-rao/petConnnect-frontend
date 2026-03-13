@@ -1,16 +1,16 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import ProtectedRoute        from './components/common/ProtectedRoute';
-import Navbar                from './components/common/Navbar';
+import ProtectedRoute from './components/common/ProtectedRoute';
+import Navbar from './components/common/Navbar';
 
-import LoginPage             from './pages/LoginPage';
-import RegisterPage          from './pages/RegisterPage';
-import BrowsePetsPage        from './pages/BrowsePetsPage';
-import PetDetailPage         from './pages/PetDetailPage';
-import ResetPasswordPage     from './pages/Resetpasswordpage';
-import ForgotPasswordPage    from './pages/Forgotpasswordpage';
+import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
+import BrowsePetsPage from './pages/BrowsePetsPage';
+import PetDetailPage from './pages/PetDetailPage';
+import ResetPasswordPage from './pages/Resetpasswordpage';
+import ForgotPasswordPage from './pages/Forgotpasswordpage';
 import ProfileCompletionPage from './pages/ProfileCompletionPage';
-import AddPetPage            from './pages/AddPetPage';
-import UnauthorizedPage      from './pages/UnauthorizedPage';
+import AddPetPage from './pages/AddPetPage';
+import UnauthorizedPage from './pages/UnauthorizedPage';
 
 const AppRoutes = () => {
   return (
