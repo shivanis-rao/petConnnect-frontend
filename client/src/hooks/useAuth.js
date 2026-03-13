@@ -1,53 +1,54 @@
-import { useState } from "react";
-import UserService from "../services/UserService";
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import LoginForm from '../components/LoginForm';
+import useAuth from '../hooks/useAuth';
 
-const useAuth = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
+const LoginContainer = () => {
+  const navigate = useNavigate();
+  const { login, isLoading, error, isAuthenticated, currentUser, clearError } = useAuth();
 
-  const login = async (payload) => {
-    setIsLoading(true);
-    setError(null);
-    try {
-      const result = await UserService.login(payload);
-      // result = { success, message, data: { accessToken, refreshToken, user } }
-      if (result.success) {
-        UserService.saveSession(result.data);
-        setIsLoading(false);
-        return { success: true, user: result.data.user };
+  useEffect(() => {
+    if (isAuthenticated) {
+      if (currentUser?.role === 'shelter') {
+        navigate('/shelter/pets');
+      } else if (currentUser?.role === 'admin') {
+        navigate('/admin/dashboard');
       } else {
-        setError(result.message || "Login failed");
-        setIsLoading(false);
-        return { success: false };
+        navigate('/browse');
       }
-    } catch (err) {
-      const message =
-        err.response?.data?.message ||
-        err.message ||
-        "Login failed. Please try again.";
-      setError(message);
-      setIsLoading(false);
-      return { success: false };
+    }
+  }, [isAuthenticated, currentUser, navigate]);
+
+  const handleLogin = async (email, password) => {
+    const result = await login({ email, password });
+    if (result.success) {
+      if (result.user?.role === 'shelter') {
+        navigate('/shelter/pets');
+      } else if (result.user?.role === 'admin') {
+        navigate('/admin/dashboard');
+      } else {
+        navigate('/browse');
+      }
     }
   };
 
-  const logout = () => {
-    UserService.logout();
+  const handleForgotPassword = () => {
+    navigate('/forgot-password');
   };
 
-  const clearError = () => {
-    setError(null);
+  const handleCreateAccount = () => {
+    navigate('/register');
   };
 
-  return {
-    isLoading,
-    error,
-    login,
-    logout,
-    clearError,
-    isAuthenticated: UserService.isAuthenticated(),
-    currentUser: UserService.getCurrentUser(),
-  };
+  return (
+    <LoginForm
+      onSubmit={handleLogin}
+      isLoading={isLoading}
+      error={error}
+      onForgotPassword={handleForgotPassword}
+      onCreateAccount={handleCreateAccount}
+    />
+  );
 };
 
-export default useAuth;
+export default LoginContainer;
