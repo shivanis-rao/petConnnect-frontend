@@ -48,10 +48,11 @@ const AppRoutes = () => {
         <Route element={<ProtectedRoute roles={['shelter', 'admin']} />}>
           <Route path="/shelter/pets" element={<NgoDashboard />} />
           <Route path="/shelter/pets/add" element={<AddPetPage />} />
-          <Route path="/shelter/pets/:id/edit" element={<AddPetPage />} />
+          <Route path="/shelter/pets/:id/add" element={<AddPetPage />} />
           <Route path="/shelter-register" element={<ShelterBasePage />} />
           <Route path="/shelter/ngo-register" element={<NgoRegistration />} />
           <Route path="/shelter/waiting-area" element={<WaitingPage />} />
+          <Route path = "/shelter/pets/:id/edit" element={<EditPetPage/>}/>
         </Route>
 
         {/* ADMIN ONLY */}
