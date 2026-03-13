@@ -1,8 +1,8 @@
-import { useRef } from 'react'
-import { Image, X } from 'lucide-react'
+import { useRef } from "react";
+import { Image, X } from "lucide-react";
 
 function PhotoSlot({ label, file, onUpload, onRemove }) {
-  const inputRef = useRef()
+  const inputRef = useRef();
 
   return (
     <div
@@ -11,10 +11,17 @@ function PhotoSlot({ label, file, onUpload, onRemove }) {
     >
       {file ? (
         <>
-          <img src={URL.createObjectURL(file)} alt={label} className="w-full h-full object-cover rounded-lg" />
+          <img
+            src={URL.createObjectURL(file)}
+            alt={label}
+            className="w-full h-full object-cover rounded-lg"
+          />
           <button
             type="button"
-            onClick={(e) => { e.stopPropagation(); onRemove() }}
+            onClick={(e) => {
+              e.stopPropagation();
+              onRemove();
+            }}
             className="absolute top-1.5 right-1.5 bg-white rounded-full p-0.5 shadow-sm"
           >
             <X size={12} className="text-red-400" />
@@ -36,15 +43,15 @@ function PhotoSlot({ label, file, onUpload, onRemove }) {
         onChange={(e) => e.target.files[0] && onUpload(e.target.files[0])}
       />
     </div>
-  )
+  );
 }
 
 export default function PhotoUpload({ photos, onUpdate }) {
   const slots = [
-    { key: 'main', label: 'MAIN PHOTO' },
-    { key: 'side', label: 'SIDE VIEW' },
-    { key: 'activity', label: 'ACTIVITY PHOTO' },
-  ]
+    { key: "main", label: "MAIN PHOTO" },
+    { key: "side", label: "SIDE VIEW" },
+    { key: "activity", label: "ACTIVITY PHOTO" },
+  ];
 
   return (
     <div>
@@ -63,5 +70,5 @@ export default function PhotoUpload({ photos, onUpdate }) {
         ))}
       </div>
     </div>
-  )
+  );
 }

@@ -1,4 +1,4 @@
-import ForgotPasswordContainer from '../containers/Forgotpasswordcontainer';
+import ForgotPasswordContainer from "../containers/Forgotpasswordcontainer";
 
 const ForgotPasswordPage = () => {
   return <ForgotPasswordContainer />;

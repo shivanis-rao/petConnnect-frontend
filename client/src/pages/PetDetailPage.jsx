@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import PetService from '../services/PetService';
+import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import PetService from "../services/PetService";
 
 const PetDetailPage = () => {
   const { id } = useParams();
@@ -15,7 +15,7 @@ const PetDetailPage = () => {
         const result = await PetService.getPetById(id);
         setPet(result.data);
       } catch {
-        setError('Failed to load pet details.');
+        setError("Failed to load pet details.");
       } finally {
         setLoading(false);
       }
@@ -38,9 +38,11 @@ const PetDetailPage = () => {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
-          <p className="text-red-500 text-sm mb-4">{error || 'Pet not found'}</p>
+          <p className="text-red-500 text-sm mb-4">
+            {error || "Pet not found"}
+          </p>
           <button
-            onClick={() => navigate('/browse')}
+            onClick={() => navigate("/browse")}
             className="text-sm text-blue-600 hover:underline"
           >
             ← Back to Browse
@@ -53,10 +55,9 @@ const PetDetailPage = () => {
   return (
     <div className="min-h-screen bg-gray-100 py-10 px-4">
       <div className="max-w-4xl mx-auto">
-
         {/* Back Button */}
         <button
-          onClick={() => navigate('/browse')}
+          onClick={() => navigate("/browse")}
           className="text-sm text-gray-500 hover:text-blue-600 mb-6 flex items-center gap-1"
         >
           ← Back to Browse
@@ -64,12 +65,14 @@ const PetDetailPage = () => {
 
         <div className="bg-white rounded-2xl shadow-sm overflow-hidden p-8">
           <div className="flex flex-col md:flex-row gap-8">
-
             {/* LEFT — Pet Image */}
             <div className="w-full md:w-80 shrink-0">
               <div className="relative">
                 <img
-                  src={pet.photo_url || 'https://placehold.co/400x400?text=No+Photo'}
+                  src={
+                    pet.photo_url ||
+                    "https://placehold.co/400x400?text=No+Photo"
+                  }
                   alt={pet.name}
                   className="w-full h-80 object-cover rounded-2xl"
                 />
@@ -86,11 +89,11 @@ const PetDetailPage = () => {
                 </h3>
                 <div className="flex items-center gap-3 mb-4">
                   <div className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center text-xs font-bold text-gray-600">
-                    {pet.shelter?.name?.charAt(0) || 'S'}
+                    {pet.shelter?.name?.charAt(0) || "S"}
                   </div>
                   <div>
                     <p className="text-sm font-medium text-gray-800">
-                      {pet.shelter?.name || 'Unknown Shelter'}
+                      {pet.shelter?.name || "Unknown Shelter"}
                     </p>
                     <p className="text-xs text-gray-400">
                       {pet.shelter?.city}, {pet.shelter?.state}
@@ -104,7 +107,7 @@ const PetDetailPage = () => {
                     Adoption Fee
                   </p>
                   <p className="text-2xl font-bold text-gray-900">
-                    {pet.adoption_fee ? `₹${pet.adoption_fee}` : 'Free'}
+                    {pet.adoption_fee ? `₹${pet.adoption_fee}` : "Free"}
                   </p>
                 </div>
               </div>
@@ -112,7 +115,6 @@ const PetDetailPage = () => {
 
             {/* RIGHT — Pet Info */}
             <div className="flex-1">
-
               {/* Name + Status */}
               <div className="flex items-center justify-between mb-1">
                 <h1 className="text-3xl font-bold text-gray-900">{pet.name}</h1>
@@ -123,7 +125,7 @@ const PetDetailPage = () => {
 
               {/* Breed + Age */}
               <p className="text-gray-500 text-sm mb-6">
-                {pet.breed} • {pet.age} {pet.age === 1 ? 'Year' : 'Years'} Old
+                {pet.breed} • {pet.age} {pet.age === 1 ? "Year" : "Years"} Old
               </p>
 
               {/* Quick Facts Grid */}
@@ -132,13 +134,12 @@ const PetDetailPage = () => {
                   Quick Facts
                 </h3>
                 <div className="grid grid-cols-2 gap-3">
-
                   <div className="bg-gray-50 rounded-xl p-3">
                     <p className="text-xs text-gray-400 uppercase tracking-wide mb-1">
                       Temperament
                     </p>
                     <p className="text-sm font-medium text-gray-800">
-                      {pet.temperament || '—'}
+                      {pet.temperament || "—"}
                     </p>
                   </div>
 
@@ -147,7 +148,7 @@ const PetDetailPage = () => {
                       Vaccinated
                     </p>
                     <p className="text-sm font-medium text-gray-800">
-                      {pet.vaccinated ? 'Yes, Up-to-date' : 'No'}
+                      {pet.vaccinated ? "Yes, Up-to-date" : "No"}
                     </p>
                   </div>
 
@@ -156,7 +157,7 @@ const PetDetailPage = () => {
                       Sterilized
                     </p>
                     <p className="text-sm font-medium text-gray-800 capitalize">
-                      {pet.sterilized?.replace('_', ' ') || '—'}
+                      {pet.sterilized?.replace("_", " ") || "—"}
                     </p>
                   </div>
 
@@ -165,7 +166,7 @@ const PetDetailPage = () => {
                       Health Record
                     </p>
                     <p className="text-sm font-medium text-gray-800">
-                      {pet.health_status || '—'}
+                      {pet.health_status || "—"}
                     </p>
                   </div>
 
@@ -174,7 +175,11 @@ const PetDetailPage = () => {
                       Good with Kids
                     </p>
                     <p className="text-sm font-medium text-gray-800">
-                      {pet.good_with_kids === true ? 'Yes' : pet.good_with_kids === false ? 'No' : '—'}
+                      {pet.good_with_kids === true
+                        ? "Yes"
+                        : pet.good_with_kids === false
+                          ? "No"
+                          : "—"}
                     </p>
                   </div>
 
@@ -183,11 +188,9 @@ const PetDetailPage = () => {
                       Special Needs
                     </p>
                     <p className="text-sm font-medium text-gray-800">
-                      {pet.special_needs ? 'Yes' : 'No'}
+                      {pet.special_needs ? "Yes" : "No"}
                     </p>
                   </div>
- 
-
                 </div>
               </div>
 
@@ -207,12 +210,11 @@ const PetDetailPage = () => {
 
               {/* Apply Button */}
               <button
-                onClick={() => alert('Application feature coming soon!')}
+                onClick={() => alert("Application feature coming soon!")}
                 className="w-full bg-blue-600 text-white py-3 rounded-xl font-medium hover:bg-blue-700 transition-colors text-sm"
               >
                 Apply for Adoption →
               </button>
-
             </div>
           </div>
         </div>

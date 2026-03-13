@@ -1,18 +1,11 @@
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import AppRoutes from "./Routes"
-import UserService from './services/UserService';
-
+import AppRoutes from "./Routes";
 
 function App() {
   return (
-   <>
-     <AppRoutes/>
-   </>
- )
+    <>
+      <AppRoutes />
+    </>
+  );
 }
 
-
-export default App
-
-
+export default App;

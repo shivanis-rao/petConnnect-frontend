@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
-import ResetPasswordForm from '../components/Resetpasswordform';
-import UserService from '../services/UserService.js';
+import { useState, useEffect } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import ResetPasswordForm from "../components/Resetpasswordform";
+import UserService from "../services/UserService.js";
 
 const ResetPasswordContainer = () => {
   const navigate = useNavigate();
@@ -13,7 +13,7 @@ const ResetPasswordContainer = () => {
 
   useEffect(() => {
     if (!token) {
-      navigate('/forgot-password');
+      navigate("/forgot-password");
     }
   }, [token, navigate]);
 
@@ -43,7 +43,10 @@ const ResetPasswordContainer = () => {
         // }
       }
     } catch (err) {
-      setError(err.response?.data?.message || 'Reset failed. Please request a new link.');
+      setError(
+        err.response?.data?.message ||
+          "Reset failed. Please request a new link.",
+      );
     } finally {
       setIsLoading(false);
     }
