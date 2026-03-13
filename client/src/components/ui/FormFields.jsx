@@ -1,9 +1,18 @@
-export function InputField({ label, required, placeholder, type = 'text', value, onChange, className = '' }) {
+export function InputField({
+  label,
+  required,
+  placeholder,
+  type = "text",
+  value,
+  onChange,
+  className = "",
+}) {
   return (
     <div className={`flex flex-col gap-1 ${className}`}>
       {label && (
         <label className="text-xs font-medium text-gray-600">
-          {label}{required && <span className="text-red-400 ml-0.5">*</span>}
+          {label}
+          {required && <span className="text-red-400 ml-0.5">*</span>}
         </label>
       )}
       <input
@@ -14,15 +23,24 @@ export function InputField({ label, required, placeholder, type = 'text', value,
         className="border border-gray-200 rounded-md px-3 py-2 text-sm text-gray-700 placeholder-gray-300 focus:border-[#3B6B8A] focus:ring-1 focus:ring-[#3B6B8A]/20 transition-colors bg-white"
       />
     </div>
-  )
+  );
 }
 
-export function SelectField({ label, required, options, value, onChange, placeholder, className = '' }) {
+export function SelectField({
+  label,
+  required,
+  options,
+  value,
+  onChange,
+  placeholder,
+  className = "",
+}) {
   return (
     <div className={`flex flex-col gap-1 ${className}`}>
       {label && (
         <label className="text-xs font-medium text-gray-600">
-          {label}{required && <span className="text-red-400 ml-0.5">*</span>}
+          {label}
+          {required && <span className="text-red-400 ml-0.5">*</span>}
         </label>
       )}
       <select
@@ -31,25 +49,39 @@ export function SelectField({ label, required, options, value, onChange, placeho
         className="border border-gray-200 rounded-md px-3 py-2 text-sm text-gray-500 focus:border-[#3B6B8A] focus:ring-1 focus:ring-[#3B6B8A]/20 transition-colors bg-white cursor-pointer"
       >
         {placeholder && <option value="">{placeholder}</option>}
-        {options.map(opt => (
-          <option key={opt.value} value={opt.value}>{opt.label}</option>
+        {options.map((opt) => (
+          <option key={opt.value} value={opt.value}>
+            {opt.label}
+          </option>
         ))}
       </select>
     </div>
-  )
+  );
 }
 
-export function RadioGroup({ label, required, name, options, value, onChange, className = '' }) {
+export function RadioGroup({
+  label,
+  required,
+  name,
+  options,
+  value,
+  onChange,
+  className = "",
+}) {
   return (
     <div className={`flex flex-col gap-1.5 ${className}`}>
       {label && (
         <label className="text-xs font-medium text-gray-600">
-          {label}{required && <span className="text-red-400 ml-0.5">*</span>}
+          {label}
+          {required && <span className="text-red-400 ml-0.5">*</span>}
         </label>
       )}
       <div className="flex items-center gap-4">
-        {options.map(opt => (
-          <label key={opt.value} className="flex items-center gap-1.5 cursor-pointer">
+        {options.map((opt) => (
+          <label
+            key={opt.value}
+            className="flex items-center gap-1.5 cursor-pointer"
+          >
             <input
               type="radio"
               name={name}
@@ -63,26 +95,38 @@ export function RadioGroup({ label, required, name, options, value, onChange, cl
         ))}
       </div>
     </div>
-  )
+  );
 }
 
-export function BooleanRadio({ label, name, value, onChange, className = '' }) {
+export function BooleanRadio({ label, name, value, onChange, className = "" }) {
   return (
     <RadioGroup
       label={label}
       name={name}
-      options={[{ value: 'true', label: 'True' }, { value: 'false', label: 'False' }]}
+      options={[
+        { value: "true", label: "True" },
+        { value: "false", label: "False" },
+      ]}
       value={value}
       onChange={onChange}
       className={className}
     />
-  )
+  );
 }
 
-export function TextareaField({ label, placeholder, value, onChange, rows = 4, className = '' }) {
+export function TextareaField({
+  label,
+  placeholder,
+  value,
+  onChange,
+  rows = 4,
+  className = "",
+}) {
   return (
     <div className={`flex flex-col gap-1 ${className}`}>
-      {label && <label className="text-xs font-medium text-gray-600">{label}</label>}
+      {label && (
+        <label className="text-xs font-medium text-gray-600">{label}</label>
+      )}
       <textarea
         placeholder={placeholder}
         value={value}
@@ -91,7 +135,7 @@ export function TextareaField({ label, placeholder, value, onChange, rows = 4, c
         className="border border-gray-200 rounded-md px-3 py-2.5 text-sm text-gray-700 placeholder-gray-300 focus:border-[#3B6B8A] focus:ring-1 focus:ring-[#3B6B8A]/20 transition-colors resize-none bg-white"
       />
     </div>
-  )
+  );
 }
 
 export function SectionHeader({ title }) {
@@ -99,5 +143,5 @@ export function SectionHeader({ title }) {
     <h2 className="text-xs font-semibold text-gray-500 uppercase tracking-widest mb-4">
       {title}
     </h2>
-  )
+  );
 }

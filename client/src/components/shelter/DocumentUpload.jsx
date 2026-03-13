@@ -1,8 +1,8 @@
-import { useRef } from 'react'
-import { FileText, X } from 'lucide-react'
+import { useRef } from "react";
+import { FileText, X } from "lucide-react";
 
 export default function DocumentUpload({ file, onUpload, onRemove }) {
-  const inputRef = useRef()
+  const inputRef = useRef();
 
   return (
     <div
@@ -12,10 +12,15 @@ export default function DocumentUpload({ file, onUpload, onRemove }) {
       {file ? (
         <>
           <FileText size={22} className="text-[#3B6B8A]" />
-          <span className="text-xs text-gray-500 text-center break-all max-w-full px-2 mt-1">{file.name}</span>
+          <span className="text-xs text-gray-500 text-center break-all max-w-full px-2 mt-1">
+            {file.name}
+          </span>
           <button
             type="button"
-            onClick={(e) => { e.stopPropagation(); onRemove() }}
+            onClick={(e) => {
+              e.stopPropagation();
+              onRemove();
+            }}
             className="absolute top-2 right-2 bg-white rounded-full p-0.5 shadow-sm"
           >
             <X size={11} className="text-red-400" />
@@ -26,8 +31,12 @@ export default function DocumentUpload({ file, onUpload, onRemove }) {
           <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center mb-1.5">
             <FileText size={15} className="text-gray-300" />
           </div>
-          <span className="text-xs text-gray-400 font-medium">UPLOAD PDF/PNG</span>
-          <span className="text-xs text-gray-300 mt-0.5">Max file size 5MB</span>
+          <span className="text-xs text-gray-400 font-medium">
+            UPLOAD PDF/PNG
+          </span>
+          <span className="text-xs text-gray-300 mt-0.5">
+            Max file size 5MB
+          </span>
         </>
       )}
       <input
@@ -38,5 +47,5 @@ export default function DocumentUpload({ file, onUpload, onRemove }) {
         onChange={(e) => e.target.files[0] && onUpload(e.target.files[0])}
       />
     </div>
-  )
+  );
 }
