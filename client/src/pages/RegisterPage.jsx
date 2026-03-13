@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate,Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import UserService from "../services/UserService";
 
 export default function RegisterPage() {
@@ -88,19 +88,26 @@ export default function RegisterPage() {
 
 
       const loginRes = await UserService.login({
-      email: formData.email,
-      password: formData.password
-    });
 
-    console.log("Login response:", loginRes); 
-    console.log("Access token:", loginRes.data?.accessToken); 
+
+      email: formData.email,
+      password: formData.password,
+      confirmPassword: formData.confirmPassword,
+      });
+
+      
+      
+
+
+      console.log("Login response:", loginRes);
+      console.log("Access token:", loginRes.data?.accessToken);
 
     UserService.saveSession(loginRes.data);
     localStorage.setItem("userId", loginRes.data.user.id);
     localStorage.setItem("role", loginRes.data.user.role);
 
        if (loginRes.data.user.role === "shelter") {
-      navigate("/shelter/setup");  // shelter setup page
+      navigate("/shelter-register");  // shelter setup page
     } else {
       navigate("/complete-profile"); // adopter profile page
     }

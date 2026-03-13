@@ -46,7 +46,7 @@ export default function ProfileCompletionPage() {
       await axios.put(
         `http://localhost:5000/api/users/${userId}/profile`,
         { ...formData, profile_completed: true },
-        { headers: { Authorization: `Bearer ${token}` } }
+        { headers: { Authorization: `Bearer ${token}` } },
       );
 
       navigate("/browse");

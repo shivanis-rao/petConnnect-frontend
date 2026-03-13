@@ -1,7 +1,7 @@
-import { useState, useEffect, useCallback } from 'react';
-import PetCard from '../components/pets/PetCard';
-import PetFilters from '../components/pets/PetFilters';
-import PetService from '../services/PetService';
+import { useState, useEffect, useCallback } from "react";
+import PetCard from "../components/pets/PetCard";
+import PetFilters from "../components/pets/PetFilters";
+import PetService from "../services/PetService";
 
 const BrowsePetsPage = () => {
   const [pets, setPets] = useState([]);
@@ -11,19 +11,19 @@ const BrowsePetsPage = () => {
   const [totalPages, setTotalPages] = useState(1);
 
   const [filters, setFilters] = useState({
-    species: '',
-    breed: '',
-    gender: '',
+    species: "",
+    breed: "",
+    gender: "",
     vaccinated: undefined,
     special_needs: undefined,
     good_with_kids: undefined,
-    age_min: '',
-    age_max: '',
-    city: '',
-    zipcode: '',
+    age_min: "",
+    age_max: "",
+    city: "",
+    zipcode: "",
     page: 1,
     limit: 9,
-    sort: 'newest',
+    sort: "newest",
   });
 
   const fetchPets = useCallback(async () => {
@@ -34,8 +34,8 @@ const BrowsePetsPage = () => {
       setPets(result.pets);
       setTotal(result.total);
       setTotalPages(result.totalPages);
-    } catch  {
-      setError('Failed to load pets. Please try again.');
+    } catch {
+      setError("Failed to load pets. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -55,29 +55,28 @@ const BrowsePetsPage = () => {
 
   const handlePageChange = (newPage) => {
     setFilters({ ...filters, page: newPage });
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-6 py-8">
-
         {/* Page Title */}
         <div className="mb-6">
           <h1 className="text-2xl font-bold text-gray-900">Discover Pets</h1>
           <p className="text-sm text-gray-500 mt-1">
-            {loading ? 'Loading...' : `Found ${total} pet${total !== 1 ? 's' : ''} available for adoption`}
+            {loading
+              ? "Loading..."
+              : `Found ${total} pet${total !== 1 ? "s" : ""} available for adoption`}
           </p>
         </div>
 
         <div className="flex gap-6">
-
           {/* Left — Filters Sidebar */}
           <PetFilters filters={filters} onChange={handleFilterChange} />
 
           {/* Right — Results */}
           <div className="flex-1">
-
             {/* Sort Bar */}
             <div className="flex items-center justify-between mb-4">
               <p className="text-sm text-gray-500">
@@ -107,7 +106,10 @@ const BrowsePetsPage = () => {
             {loading && (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                 {[...Array(9)].map((_, i) => (
-                  <div key={i} className="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 animate-pulse">
+                  <div
+                    key={i}
+                    className="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 animate-pulse"
+                  >
                     <div className="h-52 bg-gray-200" />
                     <div className="p-4 space-y-3">
                       <div className="h-4 bg-gray-200 rounded w-2/3" />
@@ -123,8 +125,12 @@ const BrowsePetsPage = () => {
             {!loading && pets.length === 0 && !error && (
               <div className="flex flex-col items-center justify-center py-24 text-center">
                 <span className="text-5xl mb-4">🐾</span>
-                <h3 className="text-lg font-semibold text-gray-700 mb-1">No pets found</h3>
-                <p className="text-sm text-gray-400">Try adjusting your filters</p>
+                <h3 className="text-lg font-semibold text-gray-700 mb-1">
+                  No pets found
+                </h3>
+                <p className="text-sm text-gray-400">
+                  Try adjusting your filters
+                </p>
               </div>
             )}
 
@@ -153,9 +159,10 @@ const BrowsePetsPage = () => {
                     key={i}
                     onClick={() => handlePageChange(i + 1)}
                     className={`px-3 py-1.5 text-sm rounded-lg border transition-colors
-                      ${filters.page === i + 1
-                        ? 'bg-blue-600 text-white border-blue-600'
-                        : 'border-gray-200 hover:border-blue-400 hover:text-blue-600'
+                      ${
+                        filters.page === i + 1
+                          ? "bg-blue-600 text-white border-blue-600"
+                          : "border-gray-200 hover:border-blue-400 hover:text-blue-600"
                       }`}
                   >
                     {i + 1}
@@ -171,7 +178,6 @@ const BrowsePetsPage = () => {
                 </button>
               </div>
             )}
-
           </div>
         </div>
       </div>
