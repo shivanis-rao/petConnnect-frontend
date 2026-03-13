@@ -14,7 +14,7 @@ const LoginContainer = () => {
       } else if (currentUser?.role === 'admin') {
         navigate('/admin/dashboard');
       } else {
-        navigate('/browse');              // ← adopter
+        navigate('/browse');              
       }
     }
   }, [isAuthenticated, currentUser, navigate]);
@@ -27,7 +27,7 @@ const LoginContainer = () => {
       } else if (result.user?.role === 'admin') {
         navigate('/admin/dashboard');
       } else {
-        navigate('/browse');              // ← adopter
+        navigate('/browse');              
       }
     }
   };

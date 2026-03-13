@@ -12,48 +12,48 @@ import ProfileCompletionPage from './pages/ProfileCompletionPage';
 import AddPetPage from './pages/AddPetPage';
 import UnauthorizedPage from './pages/UnauthorizedPage';
 
-const AppRoutes = () => {
+const AppRoutes = () => {  
   return (
     <BrowserRouter>
       <Navbar />
       <Routes>
 
-        {/* ── Public (no login needed) ───────────────────────── */}
-        <Route path="/"               element={<Navigate to="/browse" replace />} />
-        <Route path="/login"          element={<LoginPage />} />
-        <Route path="/register"       element={<RegisterPage />} />
-        <Route path="/browse"         element={<BrowsePetsPage />} />
-        <Route path="/pets/:id"       element={<PetDetailPage />} />
+        {/*Public (no login needed) */}
+        <Route path="/" element={<Navigate to="/browse" replace />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/pets/:id" element={<PetDetailPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-        <Route path="/reset-password"  element={<ResetPasswordPage />} />
-        <Route path="/unauthorized"   element={<UnauthorizedPage />} />
+        <Route path="/reset-password" element={<ResetPasswordPage />} />
+        <Route path="/unauthorized" element={<UnauthorizedPage />} />
 
-        {/* ── Any logged-in user ─────────────────────────────── */}
+        {/* Any logged-in user*/}
         <Route element={<ProtectedRoute />}>
           <Route path="/complete-profile" element={<ProfileCompletionPage />} />
         </Route>
 
-        {/* ── Adopter only ───────────────────────────────────── */}
+        {/* Adopter only */}
         <Route element={<ProtectedRoute roles={['adopter']} />}>
-          <Route path="/my-adoptions" element={<div>My Adoptions</div>} />
+          <Route path="/browse" element={<BrowsePetsPage />} />
+          <Route path="/my-applications" element={<div>My Adoptions</div>} />
         </Route>
 
-        {/* ── Shelter + Admin only ───────────────────────────── */}
+        {/*  Shelter + Admin only */}
         <Route element={<ProtectedRoute roles={['shelter', 'admin']} />}>
           <Route path="/shelter/pets/add"      element={<AddPetPage />} />
           <Route path="/shelter/pets/:id/edit" element={<AddPetPage />} />
           <Route path="/shelter/dashboard"     element={<div>Shelter Dashboard</div>} />
         </Route>
 
-        {/* ── Admin only ─────────────────────────────────────── */}
+        {/* Admin only */}
         <Route element={<ProtectedRoute roles={['admin']} />}>
           <Route path="/admin/dashboard" element={<div>Admin Dashboard</div>} />
           <Route path="/admin/users"     element={<div>Manage Users</div>} />
           <Route path="/admin/shelters"  element={<div>Manage Shelters</div>} />
         </Route>
 
-        {/* ── Catch all ──────────────────────────────────────── */}
-        <Route path="*" element={<Navigate to="/browse" replace />} />
+        {/* Catch all */}
+        <Route path="*" element={<Navigate to="/unauthorized" replace />} />
 
       </Routes>
     </BrowserRouter>
