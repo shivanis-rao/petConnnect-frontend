@@ -82,12 +82,15 @@ export default function NgoRegistration() {
 
       navigate("/shelter/waiting-area");
     } catch (err) {
-      setError("Something went wrong. Please try again.");
-      console.log(err);
-      setTimeout(() => setError(""), 2000);
-    } finally {
-      setLoading(false);
-    }
+  if (err.response?.status === 409) {
+    setError("You already have a shelter registered.");
+  } else {
+    setError("Something went wrong. Please try again.");
+  }
+  setTimeout(() => setError(""), 3000);
+} finally {
+  setLoading(false);
+}
   };
 
   return (

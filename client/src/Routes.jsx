@@ -1,4 +1,3 @@
-
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import BrowsePetsPage from "./pages/BrowsePetsPage";
@@ -17,21 +16,30 @@ import NgoDashboard from './pages/NGODashboard';
 const AppRoutes = () => {
   return (
     <BrowserRouter>
-      <Navbar />
       <Routes>
-        <Route path="/register" element={<RegisterPage />} />
-        <Route path="/complete-profile" element={<ProfileCompletionPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-        <Route path="/reset-password" element={<ResetPasswordPage />} />
-        <Route path="/browse" element={<BrowsePetsPage />} />
-        <Route path="/pets/:id" element={<PetDetailPage />} />
+
+        {/* SHELTER ROUTES — no public Navbar */}
+        <Route path="/shelter/pets" element={<NgoDashboard />} />
         <Route path="/shelter/pets/add" element={<AddPetPage />} />
         <Route path="/shelter-register" element={<ShelterBasePage />} />
         <Route path="/shelter/ngo-register" element={<NgoRegistration />} />
         <Route path="/shelter/waiting-area" element={<WaitingPage />} />
-          
-        <Route path="/shelter/pets" element={<NgoDashboard />} />
+
+        {/* PUBLIC ROUTES — with Navbar */}
+        <Route path="/*" element={
+          <>
+            <Navbar />
+            <Routes>
+              <Route path="/register" element={<RegisterPage />} />
+              <Route path="/complete-profile" element={<ProfileCompletionPage />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+              <Route path="/reset-password" element={<ResetPasswordPage />} />
+              <Route path="/browse" element={<BrowsePetsPage />} />
+              <Route path="/pets/:id" element={<PetDetailPage />} />
+            </Routes>
+          </>
+        } />
 
       </Routes>
     </BrowserRouter>

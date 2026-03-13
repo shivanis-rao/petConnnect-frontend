@@ -1,33 +1,9 @@
-
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { PlusCircle } from "lucide-react";
-import PhotoUpload from "../components/shelter/PhotoUpload";
-import DocumentUpload from "../components/shelter/DocumentUpload";
-import {
-  InputField,
-  SelectField,
-  RadioGroup,
-  BooleanRadio,
-  TextareaField,
-  SectionHeader,
-} from "../components/ui/FormFields";
-import api from "../services/Apiservices";
-
-const SPECIES_OPTIONS = [
-  { value: "Dog", label: "Dog" },
-  { value: "Cat", label: "Cat" },
-  { value: "Bird", label: "Bird" },
-  { value: "Rabbit", label: "Rabbit" },
-  { value: "Other", label: "Other" },
-];
-=======
 import { useState } from 'react'
 import api from '../services/Apiservices'
 import { useNavigate, NavLink } from 'react-router-dom'
-import { PlusCircle, Heart, List, MessageSquare, BarChart2, LogOut, PawPrint, Plus, Image, FileText, X } from 'lucide-react'
+import { PlusCircle, Heart, List, MessageSquare, BarChart2, LogOut, Plus, Image, FileText, X } from 'lucide-react'
 
-// ── SIDEBAR ────────────────────────────────────────────────────────────────
+// ── SIDEBAR ────────────────────────────────────────────────────────
 const navItems = [
   { label: 'Adoption Requests', icon: Heart, to: '/shelter/adoptions' },
   { label: 'Your Pet Listings', icon: List, to: '/shelter/pets' },
@@ -35,14 +11,11 @@ const navItems = [
   { label: 'Analytics', icon: BarChart2, to: '/shelter/analytics' },
 ]
 
-
 function Sidebar() {
   const navigate = useNavigate()
- return (
+  return (
     <aside className="w-52 min-h-screen bg-white flex flex-col border-r border-gray-100 shrink-0">
-      {/* Logo */}
       <div className="px-5 pt-6 pb-5">
-        {/* Add Pet Button */}
         <button
           onClick={() => navigate('/shelter/pets/add')}
           className="w-full flex items-center justify-center gap-2 bg-[#3182CE] hover:bg-[#2b6cb0] transition-colors text-white text-sm font-medium py-2 px-4 rounded-md"
@@ -51,8 +24,6 @@ function Sidebar() {
           Add Pet
         </button>
       </div>
-
-      {/* Nav Links */}
       <nav className="flex-1 px-3">
         {navItems.map(({ label, icon: Icon, to }) => (
           <NavLink
@@ -71,8 +42,6 @@ function Sidebar() {
           </NavLink>
         ))}
       </nav>
-
-      {/* Logout */}
       <div className="px-3 pb-6">
         <button className="flex items-center gap-3 px-3 py-2.5 w-full rounded-md text-sm text-red-400 hover:text-red-600 hover:bg-red-50 transition-colors">
           <LogOut size={15} />
@@ -82,10 +51,8 @@ function Sidebar() {
     </aside>
   )
 }
-  
 
-
-// ── FORM FIELDS ────────────────────────────────────────────────────────────
+// ── FORM FIELDS ────────────────────────────────────────────────────
 function SectionHeader({ title }) {
   return <h2 className="text-[10px] font-semibold text-gray-500 uppercase tracking-widest mb-4">{title}</h2>
 }
@@ -144,9 +111,8 @@ function TextareaField({ placeholder, value, onChange, rows = 4 }) {
   )
 }
 
-// ── PHOTO UPLOAD ───────────────────────────────────────────────────────────
+// ── PHOTO UPLOAD ───────────────────────────────────────────────────
 function PhotoSlot({ label, file, onUpload, onRemove }) {
-  const ref = { current: null }
   return (
     <div onClick={() => document.getElementById(`photo-${label}`).click()}
       className="relative border-2 border-dashed border-gray-200 rounded-lg h-28 flex flex-col items-center justify-center cursor-pointer hover:border-[#3B6B8A]/40 transition-all bg-gray-50">
@@ -172,7 +138,7 @@ function PhotoSlot({ label, file, onUpload, onRemove }) {
   )
 }
 
-// ── DOCUMENT UPLOAD ────────────────────────────────────────────────────────
+// ── DOCUMENT UPLOAD ────────────────────────────────────────────────
 function DocumentUpload({ id, file, onUpload, onRemove }) {
   return (
     <div onClick={() => document.getElementById(id).click()}
@@ -201,25 +167,13 @@ function DocumentUpload({ id, file, onUpload, onRemove }) {
   )
 }
 
-// ── OPTIONS ────────────────────────────────────────────────────────────────
+// ── OPTIONS ────────────────────────────────────────────────────────
 const SPECIES_OPTIONS = [
   { value: 'Dog', label: 'Dog' }, { value: 'Cat', label: 'Cat' },
-  { value: 'Bird', label: 'Bird' }, { value: 'Rabbit', label: 'Rabbit' }, { value: 'Other', label: 'Other' },
+  { value: 'Bird', label: 'Bird' }, { value: 'Rabbit', label: 'Rabbit' },
+  { value: 'Other', label: 'Other' },
 ]
 const STATUS_OPTIONS = [
-
-  { value: "Available", label: "Available" },
-  { value: "Reserved", label: "Reserved" },
-  { value: "OnHold", label: "On Hold" },
-  { value: "Adopted", label: "Adopted" },
-];
-
-const STERILIZED_OPTIONS = [
-  { value: "not_sterilized", label: "Not sterilized" },
-  { value: "neutered", label: "Neutered" },
-  { value: "spayed", label: "Spayed" },
-];
-
   { value: 'Available', label: 'Available' }, { value: 'Reserved', label: 'Reserved' },
   { value: 'OnHold', label: 'On Hold' }, { value: 'Adopted', label: 'Adopted' },
 ]
@@ -228,215 +182,33 @@ const STERILIZED_OPTIONS = [
   { value: 'neutered', label: 'Neutered' }, { value: 'spayed', label: 'Spayed' },
 ]
 
-
-// ── MAIN PAGE ──────────────────────────────────────────────────────────────
+// ── MAIN PAGE ──────────────────────────────────────────────────────
 export default function AddPetPage() {
-  const navigate = useNavigate();
-  const [photos, setPhotos] = useState({
-    main: null,
-    side: null,
-    activity: null,
-  });
-  const [docs, setDocs] = useState({ health: null, vaccination: null });
+  const navigate = useNavigate()
+  const [photos, setPhotos] = useState({ main: null, side: null, activity: null })
+  const [docs, setDocs] = useState({ health: null, vaccination: null })
   const [form, setForm] = useState({
-
-    name: "",
-    species: "",
-    breed: "",
-    age: "",
-    gender: "",
-    status: "Available",
-    vaccinated: "",
-    special_needs: "",
-    good_with_kids: "",
-    sterilized: "not_sterilized",
-    temperament: "",
-    adoption_fee: "",
-    rescue_story: "",
-  });
-
     name: '', species: '', breed: '', age: '', gender: '', status: 'Available',
     vaccinated: '', special_needs: '', good_with_kids: '',
     sterilized: 'not_sterilized', temperament: '', adoption_fee: '', rescue_story: '',
   })
 
-  const set = (field) => (e) =>
-    setForm((prev) => ({ ...prev, [field]: e.target.value }));
+  const set = (field) => (e) => setForm(prev => ({ ...prev, [field]: e.target.value }))
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
     try {
-
-      await api.post("/shelter/pets", form);
-      navigate("/shelter/pets");
+      await api.post('/shelter/pets', form)
+      navigate('/shelter/pets')
     } catch (error) {
-      console.error("Failed to create pet:", error);
+      console.error('Failed to create pet:', error)
+      alert(error.response?.data?.error || 'Failed to create pet')
     }
-  };
-
-  return (
-    <div className="p-6 max-w-4xl">
-      {/* Page Header */}
-      <div className="mb-6">
-        <h1 className="text-xl font-semibold text-[#1B3A4B] mb-1">
-          Add New Pet
-        </h1>
-        <p className="text-xs text-gray-400">
-          Fill in the details to list a new pet for adoption.
-        </p>
-      </div>
-
-      <form onSubmit={handleSubmit} className="space-y-5">
-        {/* PET PHOTOS */}
-        <section className="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
-          <SectionHeader title="Pet Photos" />
-          <PhotoUpload photos={photos} onUpdate={setPhotos} />
-        </section>
-
-        {/* BASIC INFORMATION */}
-        <section className="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
-          <SectionHeader title="Basic Information" />
-          <div className="grid grid-cols-3 gap-4">
-            <InputField
-              label="Pet Name"
-              required
-              placeholder="Enter pet name"
-              value={form.name}
-              onChange={set("name")}
-            />
-            <SelectField
-              label="Species"
-              required
-              placeholder="Select pet species"
-              options={SPECIES_OPTIONS}
-              value={form.species}
-              onChange={set("species")}
-            />
-            <InputField
-              label="Breed"
-              placeholder="Enter: Breed"
-              value={form.breed}
-              onChange={set("breed")}
-            />
-            <InputField
-              label="Age"
-              required
-              placeholder="e.g. 3 years"
-              value={form.age}
-              onChange={set("age")}
-            />
-            <RadioGroup
-              label="Gender"
-              required
-              name="gender"
-              options={[
-                { value: "Male", label: "Male" },
-                { value: "Female", label: "Female" },
-              ]}
-              value={form.gender}
-              onChange={set("gender")}
-            />
-            <SelectField
-              label="Status"
-              options={STATUS_OPTIONS}
-              value={form.status}
-              onChange={set("status")}
-            />
-          </div>
-        </section>
-
-        {/* HEALTH & TEMPERAMENT */}
-        <section className="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
-          <SectionHeader title="Health & Temperament" />
-          <div className="grid grid-cols-3 gap-4 mb-4">
-            <BooleanRadio
-              label="Vaccinated"
-              name="vaccinated"
-              value={form.vaccinated}
-              onChange={set("vaccinated")}
-            />
-            <BooleanRadio
-              label="Special Needs"
-              name="special_needs"
-              value={form.special_needs}
-              onChange={set("special_needs")}
-            />
-            <BooleanRadio
-              label="Good with Kids"
-              name="good_with_kids"
-              value={form.good_with_kids}
-              onChange={set("good_with_kids")}
-            />
-          </div>
-          <div className="grid grid-cols-3 gap-4">
-            <SelectField
-              label="Sterilized"
-              options={STERILIZED_OPTIONS}
-              value={form.sterilized}
-              onChange={set("sterilized")}
-            />
-            <InputField
-              label="Temperament"
-              placeholder="e.g. Calm, Playful"
-              value={form.temperament}
-              onChange={set("temperament")}
-            />
-            <InputField
-              label="Adoption Fee ($)"
-              type="number"
-              placeholder="0.00"
-              value={form.adoption_fee}
-              onChange={set("adoption_fee")}
-            />
-          </div>
-        </section>
-
-        {/* STORY & DOCUMENTS */}
-        <section className="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
-          <div className="grid grid-cols-3 gap-5">
-            <div>
-              <SectionHeader title="Rescue Story" />
-              <TextareaField
-                placeholder="Tell us about their journey..."
-                value={form.rescue_story}
-                onChange={set("rescue_story")}
-                rows={5}
-              />
-            </div>
-            <div>
-              <SectionHeader title="Health Records" />
-              <DocumentUpload
-                file={docs.health}
-                onUpload={(file) =>
-                  setDocs((prev) => ({ ...prev, health: file }))
-                }
-                onRemove={() => setDocs((prev) => ({ ...prev, health: null }))}
-              />
-            </div>
-            <div>
-              <SectionHeader title="Vaccination Proof" />
-              <DocumentUpload
-                file={docs.vaccination}
-                onUpload={(file) =>
-                  setDocs((prev) => ({ ...prev, vaccination: file }))
-                }
-                onRemove={() =>
-                  setDocs((prev) => ({ ...prev, vaccination: null }))
-                }
-              />
-
-            await api.post('/shelter/pets', form)
-            navigate('/shelter/pets')
-        } catch (error) {
-            console.error('Failed to create pet:', error)
-            alert(error.response?.data?.error || 'Failed to create pet')
-        }
   }
 
   return (
     <div className="flex min-h-screen bg-[#f5f7fa]">
       <Sidebar />
-
       <div className="flex-1 p-6 overflow-y-auto">
         <div className="max-w-4xl">
           <div className="mb-6">
@@ -449,7 +221,7 @@ export default function AddPetPage() {
             {/* PET PHOTOS */}
             <section className="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
               <SectionHeader title="Pet Photos" />
-              <p className="text-xs text-gray-400 mb-3">Upload up to 3 images. Accepted formats: JPG, PNG, into size 5MB</p>
+              <p className="text-xs text-gray-400 mb-3">Upload up to 3 images. Accepted formats: JPG, PNG, max size 5MB</p>
               <div className="grid grid-cols-3 gap-3">
                 {[['main', 'MAIN PHOTO'], ['side', 'SIDE VIEW'], ['activity', 'ACTIVITY PHOTO']].map(([key, label]) => (
                   <PhotoSlot key={key} label={label} file={photos[key]}
@@ -466,9 +238,9 @@ export default function AddPetPage() {
                 <InputField label="Pet Name" required placeholder="Enter pet name" value={form.name} onChange={set('name')} />
                 <SelectField label="Species" required placeholder="Select pet species" options={SPECIES_OPTIONS} value={form.species} onChange={set('species')} />
                 <InputField label="Breed" placeholder="Enter: Breed" value={form.breed} onChange={set('breed')} />
-                <InputField label="Age" required placeholder="e.g. 3 years" value={form.age} onChange={set('age')} />
+                <InputField label="Age" required placeholder="e.g. 3" type="number" value={form.age} onChange={set('age')} />
                 <RadioGroup label="Gender" required name="gender"
-                  options={[{ value: 'Male', label: 'Male' }, { value: 'Female', label: 'Female' }]}
+                  options={[{ value: 'male', label: 'Male' }, { value: 'female', label: 'Female' }]}
                   value={form.gender} onChange={set('gender')} />
                 <SelectField label="Status" options={STATUS_OPTIONS} value={form.status} onChange={set('status')} />
               </div>
@@ -485,7 +257,7 @@ export default function AddPetPage() {
               <div className="grid grid-cols-3 gap-4">
                 <SelectField label="Sterilized" options={STERILIZED_OPTIONS} value={form.sterilized} onChange={set('sterilized')} />
                 <InputField label="Temperament" placeholder="e.g. Calm, Playful" value={form.temperament} onChange={set('temperament')} />
-                <InputField label="Adoption Fee ($)" type="number" placeholder="0.00" value={form.adoption_fee} onChange={set('adoption_fee')} />
+                <InputField label="Adoption Fee (₹)" type="number" placeholder="0" value={form.adoption_fee} onChange={set('adoption_fee')} />
               </div>
             </section>
 
@@ -522,12 +294,11 @@ export default function AddPetPage() {
                 Add New Pet
                 <PlusCircle size={15} />
               </button>
-
             </div>
 
           </form>
         </div>
       </div>
     </div>
-  );
+  )
 }
