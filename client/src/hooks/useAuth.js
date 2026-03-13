@@ -1,57 +1,77 @@
-import { useState } from 'react';
+import { useState, useEffect, createContext, useContext } from 'react';
 import UserService from '../services/UserService';
 
+export const AuthContext = createContext(null);
 
-const useAuth = () => {
- const [isLoading, setIsLoading] = useState(false);
- const [error, setError] = useState(null);
+export const useAuthState = () => {
+  const [currentUser, setCurrentUser] = useState(null);
+  const [isLoading,   setIsLoading]   = useState(false);
+  const [error,       setError]       = useState(null);
+  const [isBootstrapping, setIsBootstrapping] = useState(true);
 
+  useEffect(() => {
+    const savedUser = UserService.getCurrentUser();
+    if (savedUser) setCurrentUser(savedUser);
+    setIsBootstrapping(false);
+  }, []);
 
- const login = async (payload) => {
-   setIsLoading(true);
-   setError(null);
-   try {
-     const result = await UserService.login(payload);
-     // result = { success, message, data: { accessToken, refreshToken, user } }
-     if (result.success) {
-       UserService.saveSession(result.data);
-       setIsLoading(false);
-       return { success: true, user: result.data.user };
-     } else {
-       setError(result.message || 'Login failed');
-       setIsLoading(false);
-       return { success: false };
-     }
-   } catch (err){
-     const message =
-       err.response?.data?.message || err.message || 'Login failed. Please try again.';
-     setError(message);
-     setIsLoading(false);
-     return { success: false };
-   }
- };
+  const login = async (payload) => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      const result = await UserService.login(payload);
+      if (result.success) {
+        UserService.saveSession(result.data);
+        setCurrentUser(result.data.user);
+        setIsLoading(false);
+        return { success: true, user: result.data.user };
+      } else {
+        setError(result.message || 'Login failed');
+        setIsLoading(false);
+        return { success: false };
+      }
+    } catch (err) {
+      const message =
+        err.response?.data?.message || err.message || 'Login failed.';
+      setError(message);
+      setIsLoading(false);
+      return { success: false };
+    }
+  };
 
+  const logout = () => {
+    UserService.logout();
+    setCurrentUser(null);
+  };
 
- const logout = () => {
-   UserService.logout();
- };
+  const clearError = () => setError(null);
 
+  const isAdmin   = currentUser?.role === 'admin';
+  const isShelter = currentUser?.role === 'shelter';
+  const isAdopter = currentUser?.role === 'adopter';
+  const hasRole   = (...roles) =>
+    Boolean(currentUser) && roles.includes(currentUser.role);
 
- const clearError = () => {
-   setError(null);
- };
-
-
- return {
-   isLoading,
-   error,
-   login,
-   logout,
-   clearError,
-   isAuthenticated: UserService.isAuthenticated(),
-   currentUser: UserService.getCurrentUser(),
- };
+  return {
+    currentUser,
+    isLoading,
+    isBootstrapping,
+    error,
+    isAuthenticated: Boolean(currentUser),
+    isAdmin,
+    isShelter,
+    isAdopter,
+    hasRole,
+    login,
+    logout,
+    clearError,
+  };
 };
 
+const useAuth = () => {
+  const ctx = useContext(AuthContext);
+  if (!ctx) throw new Error('useAuth must be used inside <AuthProvider>');
+  return ctx;
+};
 
 export default useAuth;

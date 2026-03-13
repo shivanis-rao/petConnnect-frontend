@@ -62,7 +62,7 @@ api.interceptors.response.use(
          })
          .catch((err) => Promise.reject(err));
      }
-
+     
 
      originalRequest._retry = true;
      isRefreshing = true;
@@ -113,6 +113,12 @@ api.interceptors.response.use(
        isRefreshing = false;
      }
    }
+   if (error.response?.status === 403) {
+      window.location.href = '/unauthorized';
+      return Promise.reject(error);
+    }
+
+    return Promise.reject(error);
 
 
    return Promise.reject(error);
