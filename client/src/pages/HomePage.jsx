@@ -324,91 +324,56 @@ export default function HomePage() {
       </section>
 
       {/* Footer */}
-      <footer
-        id="footer"
-        className="bg-white border-t border-gray-100 pt-14 pb-8"
-      >
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10 mb-10">
-            <div>
-              <span className="text-blue-600 font-bold text-lg">
-                🐾 PetConnect
-              </span>
-              <p className="text-gray-400 text-sm leading-relaxed mt-3">
-                Making the world a better place, one adoption at a time.
-              </p>
-            </div>
-            <div>
-              <h4 className="font-bold text-gray-900 mb-4 text-sm">
-                Quick Links
-              </h4>
-              <ul className="space-y-2.5">
-                {["Find a Pet", "Shelter Login", "Volunteer", "Resources"].map(
-                  (l) => (
-                    <li key={l}>
-                      <a
-                        href="#"
-                        className="text-gray-500 text-sm hover:text-blue-600 transition"
-                      >
-                        {l}
-                      </a>
-                    </li>
-                  ),
-                )}
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-bold text-gray-900 mb-4 text-sm">Company</h4>
-              <ul className="space-y-2.5">
-                {["About Us", "Careers", "Press Kit", "Contact"].map((l) => (
-                  <li key={l}>
-                    <a
-                      href="#"
-                      className="text-gray-500 text-sm hover:text-blue-600 transition"
-                    >
-                      {l}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-bold text-gray-900 mb-2 text-sm">
-                Newsletter
-              </h4>
-              <p className="text-gray-400 text-sm mb-4">
-                Stay updated with pet care tips and success stories.
-              </p>
-              <div className="flex gap-2">
-                <input
-                  type="email"
-                  placeholder="Email address"
-                  className="flex-1 border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
-                />
-                <button className="bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-4 py-2 rounded-lg transition">
-                  Join
-                </button>
+      <footer className="bg-white border-t border-gray-100 px-8 py-8">
+        <div className="max-w-5xl mx-auto flex flex-col md:flex-row justify-between gap-6 text-sm text-gray-500">
+          <div>
+            <div className="flex items-center gap-2">
+              <div className="w-9 h-9 bg-blue-100 rounded-xl flex items-center justify-center text-blue-600 text-lg shadow-sm">
+                🐾
               </div>
+              <span className="font-bold text-lg text-gray-900 tracking-tight">
+                PetConnect
+              </span>
+            </div>
+            <p className="text-xs max-w-xs leading-relaxed">
+              Connecting loving owners with their perfect companions. Making
+              adoption easier since 2026.
+            </p>
+          </div>
+          <div>
+            <p className="font-semibold text-gray-700 mb-3 uppercase text-xs tracking-wider">
+              Support
+            </p>
+            <div className="flex flex-col gap-1.5">
+              <p className="hover:text-blue-600 cursor-pointer transition-colors">
+                Contact Support
+              </p>
+              <p className="hover:text-blue-600 cursor-pointer transition-colors">
+                Privacy Policy
+              </p>
+              <p className="hover:text-blue-600 cursor-pointer transition-colors">
+                Terms of Use
+              </p>
             </div>
           </div>
-          <div className="border-t border-gray-100 pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
-            <span className="text-gray-400 text-xs">
-              © 2024 PetConnect Inc. All rights reserved.
-            </span>
-            <div className="flex gap-4 flex-wrap justify-center">
-              {["Privacy Policy", "Terms of Service", "Cookie Settings"].map(
-                (l) => (
-                  <a
-                    key={l}
-                    href="#"
-                    className="text-gray-400 text-xs hover:text-gray-600 transition"
-                  >
-                    {l}
-                  </a>
-                ),
-              )}
+          <div>
+            <p className="font-semibold text-gray-700 mb-3 uppercase text-xs tracking-wider">
+              Connect
+            </p>
+            <div className="flex gap-3">
+              {["📘", "🐦", "📸"].map((icon, i) => (
+                <div
+                  key={i}
+                  className="w-8 h-8 bg-gray-100 hover:bg-blue-100 rounded-lg flex items-center justify-center cursor-pointer transition-colors"
+                >
+                  {icon}
+                </div>
+              ))}
             </div>
           </div>
+        </div>
+        <div className="max-w-5xl mx-auto mt-6 pt-4 border-t border-gray-100 text-xs text-gray-400 text-center">
+          PetConnect © 2026. All rights reserved. 
         </div>
       </footer>
     </div>
