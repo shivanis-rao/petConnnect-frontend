@@ -69,14 +69,6 @@ export default function ShelterBasePage() {
             PetConnect
           </span>
         </div>
-        <div className="flex items-center gap-1 bg-gray-100 rounded-full px-2 py-1 text-sm">
-          <span className="px-3 py-1 text-gray-500 cursor-pointer hover:text-gray-700">
-            Home
-          </span>
-          <span className="px-3 py-1 bg-white text-blue-600 font-semibold rounded-full shadow-sm">
-            Shelter
-          </span>
-        </div>
       </nav>
 
       {/* Hero Section */}

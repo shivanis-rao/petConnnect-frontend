@@ -28,7 +28,7 @@ import MyApplicationsPage from "./pages/MyApplicationsPage";
 
 const Layout = ({ children }) => {
   const location = useLocation();
-  const hideNavbarOn = ["/", "/shelter-register"];
+  const hideNavbarOn = ["/", "/shelter-register", "/shelter/ngo-register"];
   const showNavbar = !hideNavbarOn.includes(location.pathname);
   return (
     <>
