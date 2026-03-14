@@ -76,7 +76,7 @@ export default function RegisterPage() {
 
     setLoading(true);
     try {
-      const res = await UserService.register({
+      await UserService.register({
         firstName: formData.firstName,
         lastName: formData.lastName,
         phoneNumber: formData.phoneNumber,
