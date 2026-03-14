@@ -76,7 +76,7 @@ const STATUS_CONFIG = {
 
 const TABS = ["All", "Pending", "Approved", "Interview", "Home Visit"];
 
-export default function AdoptionRequests() {
+export default function ShelterAdoptionRequests() {
   const [activeTab, setActiveTab] = useState("All");
   const [sidebarActive, setSidebarActive] = useState("Adoption Requests");
 

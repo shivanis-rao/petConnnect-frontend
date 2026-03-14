@@ -25,6 +25,7 @@ import NgoDashboard from "./pages/NGODashboard";
 import EditPetPage from "./pages/EditPetPage";
 import AdoptionApplicationPage from "./pages/AdoptionApplicationPage";
 import MyApplicationsPage from "./pages/MyApplicationsPage";
+import AdoptionRequests from "./pages/ShelterAdoptionRequests";
 
 const Layout = ({ children }) => {
   const location = useLocation();
@@ -73,6 +74,10 @@ const AppRoutes = () => {
           {/* SHELTER + ADMIN */}
           <Route element={<ProtectedRoute roles={["shelter", "admin"]} />}>
             <Route path="/shelter/pets" element={<NgoDashboard />} />
+            <Route
+              path="/shelter/adoptionreq"
+              element={<AdoptionRequests />}
+            />
             <Route path="/shelter/pets/add" element={<AddPetPage />} />
             <Route path="/shelter/pets/:id/add" element={<AddPetPage />} />
             <Route path="/shelter/pets/:id/edit" element={<EditPetPage />} />
