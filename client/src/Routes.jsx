@@ -19,15 +19,19 @@ import NgoDashboard from './pages/NGODashboard';
 import EditPetPage from './pages/EditPetPage';
 import AdoptionApplicationPage from './pages/AdoptionApplicationPage';
 import MyApplicationsPage from './pages/MyApplicationsPage';
+import Footer from './components/common/Footer'
 
 const Layout = ({ children }) => {
   const location = useLocation();
   const hideNavbarOn = ["/","/shelter-register"];
   const showNavbar = !hideNavbarOn.includes(location.pathname);
+   const hideFooterOn = ["/", "/shelter-register"];
+  const showFooter = !hideFooterOn.includes(location.pathname);
   return (
     <>
       {showNavbar && <Navbar />}
       {children}
+      {showFooter && <Footer />} 
     </>
   );
 };
