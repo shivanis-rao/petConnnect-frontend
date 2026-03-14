@@ -5,7 +5,7 @@ import useAuth from "../hooks/useAuth";
 
 const LoginContainer = () => {
   const navigate = useNavigate();
-  const { login, isLoading, error, isAuthenticated, currentUser } = useAuth();
+  const { login, isLoading, error } = useAuth(); //isAuthenticated, currentUser
 
   const handleLogin = async (email, password) => {
     const result = await login({ email, password });
