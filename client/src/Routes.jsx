@@ -12,7 +12,9 @@ import ShelterBasePage from "./pages/ShelterBasePage";
 import NgoRegistration from "./pages/NgoRegistration";
 import WaitingPage from "./pages/WaitingPage";
 import HomePage from "./pages/HomePage";
+
 import { useLocation } from "react-router-dom";
+import AdoptionRequests from "./pages/ShelterAdoptionRequests";
 
 const Layout = ({ children }) => {
   const location = useLocation();
@@ -21,6 +23,7 @@ const Layout = ({ children }) => {
     "/shelter-register",
     "/shelter/ngo-register",
     "/shelter/waiting-area",
+    "/shelter/adoptionrequests",
   ];
   const showNavbar = !hideNavbarOn.includes(location.pathname);
 
@@ -41,6 +44,10 @@ const AppRoutes = () => {
           <Route path="/shelter-register" element={<ShelterBasePage />} />
           <Route path="/shelter/ngo-register" element={<NgoRegistration />} />
           <Route path="/shelter/waiting-area" element={<WaitingPage />} />
+          <Route
+            path="/shelter/adoptionrequests"
+            element={<AdoptionRequests />}
+          />
           {/* With Navbar */}
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/complete-profile" element={<ProfileCompletionPage />} />
