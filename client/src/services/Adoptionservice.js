@@ -4,17 +4,17 @@ import Apiservices from "./Apiservices";
 // Add console.log to debug what value is being sent
 const mapLivingArrangement = (value) => {
   const map = {
-    "family":           "Family",
-    "with family":      "Family",
-    "Family":           "Family",
-    "With Family":      "Family",
-    "alone":            "I live alone",
-    "i live alone":     "I live alone",
-    "I live alone":     "I live alone",
-    "roommates":        "House/Room mates",
+    family: "Family",
+    "with family": "Family",
+    Family: "Family",
+    "With Family": "Family",
+    alone: "I live alone",
+    "i live alone": "I live alone",
+    "I live alone": "I live alone",
+    roommates: "House/Room mates",
     "house/room mates": "House/Room mates",
     "House/Room mates": "House/Room mates",
-    "Roommates":        "House/Room mates",
+    Roommates: "House/Room mates",
   };
   const result = map[value] || map[value?.toLowerCase()] || value;
   console.log("livingArrangement raw:", value, "→ mapped:", result);
@@ -23,22 +23,27 @@ const mapLivingArrangement = (value) => {
 
 const mapFamilyAgreement = (value) => {
   const map = {
-    "yes": "Yes", "Yes": "Yes",
-    "no":  "No",  "No":  "No",
-    "n/a": "N/A", "N/A": "N/A",
-    "":    "N/A",
+    yes: "Yes",
+    Yes: "Yes",
+    no: "No",
+    No: "No",
+    "n/a": "N/A",
+    "N/A": "N/A",
+    "": "N/A",
   };
   return map[value] || map[value?.toLowerCase()] || "N/A";
 };
 
 const mapLandlord = (value) => {
   const map = {
-    "yes":            "Yes", "Yes":            "Yes",
-    "no":             "No",  "No":             "No",
+    yes: "Yes",
+    Yes: "Yes",
+    no: "No",
+    No: "No",
     "i am the owner": "I am the owner",
     "I am the owner": "I am the owner",
-    "owner":          "I am the owner",
-    "Owner":          "I am the owner",
+    owner: "I am the owner",
+    Owner: "I am the owner",
   };
   return map[value] || map[value?.toLowerCase()] || value;
 };
@@ -52,13 +57,13 @@ const AdoptionService = {
   // POST /api/adoption/apply/:petId
   submitApplication: (petId, formData) => {
     const payload = {
-      shelterId:          formData.shelterId,
-      currentOccupation:  formData.current_occupation,
-      address:            formData.address,
-      livingArrangement:  mapLivingArrangement(formData.living_situation),
-      familyAgreement:    mapFamilyAgreement(formData.family_agreement),
+      shelterId: formData.shelterId,
+      currentOccupation: formData.current_occupation,
+      address: formData.address,
+      livingArrangement: mapLivingArrangement(formData.living_situation),
+      familyAgreement: mapFamilyAgreement(formData.family_agreement),
       landlordAllowsPets: mapLandlord(formData.landlord_permission),
-      petCareWhenAway:    formData.vacation_care,
+      petCareWhenAway: formData.vacation_care,
     };
     // Log full payload so we can see exactly what is sent
     console.log("Adoption submit payload:", payload);

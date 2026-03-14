@@ -9,7 +9,7 @@ const ResetPasswordContainer = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
-  const token = searchParams.get('token');
+  const token = searchParams.get("token");
 
   useEffect(() => {
     if (!token) {
@@ -23,11 +23,10 @@ const ResetPasswordContainer = () => {
     try {
       const result = await UserService.resetPassword(token, newPassword);
       if (result.success) {
-      
-      setSuccess(true);
-      setTimeout(() => {
-        window.close(); // close the reset tab
-      }, 5000);
+        setSuccess(true);
+        setTimeout(() => {
+          window.close(); // close the reset tab
+        }, 5000);
         // // Redirect based on role
         // if (result.data.user?.role === 'shelter') {
         //   navigate('/shelter/dashboard');
@@ -50,7 +49,7 @@ const ResetPasswordContainer = () => {
       onSubmit={handleSubmit}
       isLoading={isLoading}
       error={error}
-      success={success}   
+      success={success}
     />
   );
 };
