@@ -17,10 +17,12 @@ import NgoRegistration from './pages/NgoRegistration';
 import WaitingPage from './pages/WaitingPage';
 import NgoDashboard from './pages/NGODashboard';
 import EditPetPage from './pages/EditPetPage';
+import AdoptionApplicationPage from './pages/AdoptionApplicationPage';
+import MyApplicationsPage from './pages/MyApplicationsPage';
 
 const Layout = ({ children }) => {
   const location = useLocation();
-  const hideNavbarOn = ["/"];
+  const hideNavbarOn = ["/","/shelter-register"];
   const showNavbar = !hideNavbarOn.includes(location.pathname);
   return (
     <>
@@ -53,7 +55,8 @@ const AppRoutes = () => {
           {/* ADOPTER ONLY */}
           <Route element={<ProtectedRoute roles={['adopter']} />}>
             <Route path="/browse" element={<BrowsePetsPage />} />
-            <Route path="/my-applications" element={<div>My Adoptions</div>} />
+            <Route path="/my-applications" element={<MyApplicationsPage/>} />
+            <Route path="/pets/:id/apply" element={<AdoptionApplicationPage />} />
           </Route>
 
           {/* SHELTER + ADMIN */}
