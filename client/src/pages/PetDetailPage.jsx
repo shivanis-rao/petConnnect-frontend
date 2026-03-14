@@ -2,13 +2,11 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import PetService from "../services/PetService";
 import UserService from "../services/UserService";
+import AdoptionApplicationForm from "../components/pets/ApplicationAdoptionForm";
 
 const PetDetailPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [pet, setPet] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   const handleAdopt = () => {
     if (!UserService.isAuthenticated()) {
@@ -17,6 +15,10 @@ const PetDetailPage = () => {
     }
     navigate(`/pets/${id}/apply`);
   };
+
+  const [pet, setPet] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchPet = async () => {

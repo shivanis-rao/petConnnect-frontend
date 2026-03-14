@@ -10,8 +10,6 @@ const Navbar = () => {
     navigate("/login");
   };
 
-  const isShelter = currentUser?.role === "shelter";
-
   return (
     <nav className="bg-white/80 backdrop-blur-md shadow-sm px-8 py-4 flex items-center justify-between sticky top-0 z-50">
       {/* Logo */}
@@ -39,46 +37,38 @@ const Navbar = () => {
 
       {/* Nav Links */}
       <div className="flex items-center gap-8">
-        {isShelter ? (
-          // Shelter nav: Home + Dashboard only
-          <>
-            <Link
-              to="/"
-              className="text-gray-600 hover:text-blue-600 text-sm font-medium"
-            >
-              Home
-            </Link>
-            <Link
-              to="/shelter/adoptionrequests"
-              className="text-gray-600 hover:text-blue-600 text-sm font-medium"
-            >
-              Dashboard
-            </Link>
-          </>
-        ) : (
-          // Adopter nav: full links
-          <>
-            <Link
-              to="/"
-              className="text-gray-600 hover:text-blue-600 text-sm font-medium"
-            >
-              Home
-            </Link>
-            <Link
-              to="/browse"
-              className="text-gray-600 hover:text-blue-600 text-sm font-medium"
-            >
-              Browse Pets
-            </Link>
-            {isAuthenticated && (
-              <Link
-                to="/my-applications"
-                className="text-gray-600 hover:text-blue-600 text-sm font-medium"
-              >
-                My Applications
-              </Link>
-            )}
-          </>
+        <Link
+          to="/"
+          className="text-gray-600 hover:text-blue-600 text-sm font-medium"
+        >
+          Home
+        </Link>
+
+        {currentUser?.role === "adopter" && (
+          <Link
+            to="/browse"
+            className="text-gray-600 hover:text-blue-600 text-sm font-medium"
+          >
+            Browse Pets
+          </Link>
+        )}
+
+        {isAuthenticated && currentUser?.role === "adopter" && (
+          <Link
+            to="/my-applications"
+            className="text-gray-600 hover:text-blue-600 text-sm font-medium"
+          >
+            My Applications
+          </Link>
+        )}
+
+        {isAuthenticated && currentUser?.role === "shelter" && (
+          <Link
+            to="/shelter/dashboard"
+            className="text-gray-600 hover:text-blue-600 text-sm font-medium"
+          >
+            Dashboard
+          </Link>
         )}
       </div>
 
