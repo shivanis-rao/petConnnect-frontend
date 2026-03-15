@@ -1,5 +1,5 @@
 import { useNavigate, Link } from "react-router-dom";
-import useAuth from "../../hooks/useAuth";
+import useAuth from "../../hooks/AuthContext";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -44,30 +44,41 @@ const Navbar = () => {
           Home
         </Link>
 
+        {/*Adopter Links*/}
         {currentUser?.role === "adopter" && (
-          <Link
-            to="/browse"
-            className="text-gray-600 hover:text-blue-600 text-sm font-medium"
-          >
-            Browse Pets
-          </Link>
+          <>
+            <Link
+              to="/browse"
+              className="text-gray-600 hover:text-blue-600 text-sm font-medium"
+            >
+              Browse Pets
+            </Link>
+            <Link
+              to="/my-applications"
+              className="text-gray-600 hover:text-blue-600 text-sm font-medium"
+            >
+              My Applications
+            </Link>
+          </>
         )}
 
-        {isAuthenticated && currentUser?.role === "adopter" && (
-          <Link
-            to="/my-applications"
-            className="text-gray-600 hover:text-blue-600 text-sm font-medium"
-          >
-            My Applications
-          </Link>
-        )}
-
+        {/*Shelter Links */}
         {isAuthenticated && currentUser?.role === "shelter" && (
           <Link
-            to="/shelter/dashboard"
+            to="/shelter/pets"
             className="text-gray-600 hover:text-blue-600 text-sm font-medium"
           >
             Dashboard
+          </Link>
+        )}
+
+        {/* ── ADMIN LINKS ────────────────────────────────────────── */}
+        {currentUser?.role === "admin" && (
+          <Link
+            to="/admin/dashboard"
+            className="text-gray-600 hover:text-blue-600 text-sm font-medium"
+          >
+            Admin Panel
           </Link>
         )}
       </div>

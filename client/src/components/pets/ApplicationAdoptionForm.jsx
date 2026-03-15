@@ -1,34 +1,33 @@
 const TOTAL_STEPS = 3;
 
 const LIVING_OPTIONS = [
-  { val: "alone", label: "I Live Alone", icon: "🧍" },
-  { val: "family", label: "With Family", icon: "👨‍👩‍👧" },
-  { val: "roommates", label: "House / Roommates", icon: "🏠" },
+  { val: "I live alone", label: "I Live Alone", icon: "🧍" },
+  { val: "Family", label: "With Family", icon: "👨‍👩‍👧" },
+  { val: "House/Room mates", label: "House / Roommates", icon: "🏠" },
 ];
 
 const AGREEMENT_OPTIONS = [
-  { val: "yes", label: "Yes, everyone agrees", icon: "✅" },
-  { val: "no", label: "No / Not sure", icon: "❌" },
+  { val: "Yes", label: "Yes, everyone agrees", icon: "✅" },
+  { val: "No", label: "No / Not sure", icon: "❌" },
 ];
 
 const LANDLORD_OPTIONS = [
-  { val: "yes", label: "Yes, allowed", icon: "✅" },
-  { val: "no", label: "No, not allowed", icon: "🚫" },
-  { val: "owner", label: "I Own My Home", icon: "🏡" },
+  { val: "Yes", label: "Yes, allowed", icon: "✅" },
+  { val: "No", label: "No, not allowed", icon: "🚫" },
+  { val: "I am the owner", label: "I Own My Home", icon: "🏡" },
 ];
 
 const LIVING_LABELS = {
-  alone: "Living Alone",
-  family: "With Family",
-  roommates: "House / Roommates",
+  "I live alone": "Living Alone",
+  Family: "With Family",
+  "House/Room mates": "House / Roommates",
 };
 
 const LANDLORD_LABELS = {
-  yes: "Yes",
-  no: "No",
-  owner: "I own my home",
+  Yes: "Yes",
+  No: "No",
+  "I am the owner": "I own my home",
 };
-
 // ── Sub-components ────────────────────────────────────────────────────────────
 
 const ChoiceButton = ({ value, selected, icon, label, onClick }) => (
@@ -265,7 +264,8 @@ const Step1PersonalDetails = ({ form, set, onNext }) => {
 
 const Step2Lifestyle = ({ form, set, onBack, onNext }) => {
   const showFamilyAgreement =
-    form.living_situation === "family" || form.living_situation === "roommates";
+    form.living_situation === "Family" ||
+    form.living_situation === "House/Room mates";
   const isValid =
     form.living_situation && form.landlord_permission && form.vacation_care;
 

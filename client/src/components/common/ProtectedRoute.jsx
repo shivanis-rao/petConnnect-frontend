@@ -1,5 +1,5 @@
 import { Navigate, Outlet, useLocation } from "react-router-dom";
-import useAuth from "../../hooks/useAuth";
+import useAuth from "../../hooks/AuthContext";
 
 /**
  * <Route element={<ProtectedRoute />}>
@@ -10,6 +10,7 @@ import useAuth from "../../hooks/useAuth";
  */
 const ProtectedRoute = ({ roles }) => {
   const { currentUser, isBootstrapping } = useAuth();
+
   const location = useLocation();
 
   // Wait for localStorage rehydration before deciding

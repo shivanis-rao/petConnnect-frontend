@@ -1,11 +1,11 @@
 //import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import LoginForm from "../components/LoginForm";
-import useAuth from "../hooks/useAuth";
+import useAuth from "../hooks/AuthContext";
 
 const LoginContainer = () => {
   const navigate = useNavigate();
-  const { login, isLoading, error } = useAuth(); //isAuthenticated, currentUser
+  const { login, isLoading, error, isAuthenticated, currentUser } = useAuth(); //isAuthenticated, currentUser
 
   const handleLogin = async (email, password) => {
     const result = await login({ email, password });

@@ -627,7 +627,7 @@ export default function ApplicationDetailsPage() {
                 Please contact the shelter for more information.
               </p>
               <button
-                onClick={() => navigate("/browse-pets")}
+                onClick={() => navigate("/browse")}
                 className="text-xs bg-white border border-red-200 text-red-600 px-4 py-2 rounded-lg hover:bg-red-50 transition-colors font-medium"
               >
                 Browse Other Pets

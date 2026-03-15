@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import api from "../services/Apiservices";
 
-const registrationTypes = ["Society", "Trust", "Section 8 Company"];
+const registrationTypes = ["Society", "Trust", "section8"];
 
 export default function NgoRegistration() {
   const location = useLocation();

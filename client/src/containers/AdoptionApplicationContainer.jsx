@@ -77,12 +77,12 @@ const AdoptionApplicationContainer = () => {
 
       await AdoptionService.submitApplication(id, {
         shelterId,
-        current_occupation: form.current_occupation,
+        currentOccupation: form.current_occupation,
         address: form.address,
-        living_situation: form.living_situation,
-        family_agreement: form.family_agreement || "N/A",
-        landlord_permission: form.landlord_permission,
-        vacation_care: form.vacation_care,
+        livingArrangement: form.living_situation,
+        familyAgreement: form.family_agreement || "N/A",
+        landlordAllowsPets: form.landlord_permission,
+        petCareWhenAway: form.vacation_care,
       });
 
       setSubmitted(true);

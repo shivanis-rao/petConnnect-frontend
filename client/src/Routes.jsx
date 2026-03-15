@@ -8,28 +8,35 @@ import {
 import ProtectedRoute from "./components/common/ProtectedRoute";
 import Navbar from "./components/common/Navbar";
 
-import LoginPage from './pages/LoginPage';
-import RegisterPage from './pages/RegisterPage';
-import BrowsePetsPage from './pages/BrowsePetsPage';
-import PetDetailPage from './pages/PetDetailPage';
-import ResetPasswordPage from './pages/Resetpasswordpage';
-import ForgotPasswordPage from './pages/Forgotpasswordpage';
-import ProfileCompletionPage from './pages/ProfileCompletionPage';
-import AddPetPage from './pages/AddPetPage';
-import HomePage from './pages/HomePage';
-import UnauthorizedPage from './pages/UnauthorizedPage';
-import ShelterBasePage from './pages/ShelterBasePage';
-import NgoRegistration from './pages/NgoRegistration';
-import WaitingPage from './pages/WaitingPage';
-import NgoDashboard from './pages/NGODashboard';
-import EditPetPage from './pages/EditPetPage';
-import AdoptionApplicationPage from './pages/AdoptionApplicationPage';
-import MyApplicationsPage from './pages/MyApplicationsPage';
-import ApplicationDetailsPage from './pages/ApplicationDetailsPage';
+import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
+import BrowsePetsPage from "./pages/BrowsePetsPage";
+import PetDetailPage from "./pages/PetDetailPage";
+import ResetPasswordPage from "./pages/Resetpasswordpage";
+import ForgotPasswordPage from "./pages/Forgotpasswordpage";
+import ProfileCompletionPage from "./pages/ProfileCompletionPage";
+import AddPetPage from "./pages/AddPetPage";
+import HomePage from "./pages/HomePage";
+import UnauthorizedPage from "./pages/UnauthorizedPage";
+import ShelterBasePage from "./pages/ShelterBasePage";
+import NgoRegistration from "./pages/NgoRegistration";
+import WaitingPage from "./pages/WaitingPage";
+import NgoDashboard from "./pages/NGODashboard";
+import EditPetPage from "./pages/EditPetPage";
+import AdoptionApplicationPage from "./pages/AdoptionApplicationPage";
+import MyApplicationsPage from "./pages/MyApplicationsPage";
+import ApplicationDetailsPage from "./pages/ApplicationDetailsPage";
+import AdoptionRequests from "./pages/ShelterAdoptionRequests.jsx";
+import ShelterApplicationDetailPage from "./pages/ShelterApplicationDetailPage";
 
 const Layout = ({ children }) => {
   const location = useLocation();
-  const hideNavbarOn = ["/", "/shelter-register", "/shelter/ngo-register"];
+  const hideNavbarOn = [
+    "/",
+    "/shelter-register",
+    "/shelter/ngo-register",
+    "/shelter/waiting-area",
+  ];
   const showNavbar = !hideNavbarOn.includes(location.pathname);
   return (
     <>
@@ -64,17 +71,24 @@ const AppRoutes = () => {
           {/* ADOPTER ONLY */}
           <Route element={<ProtectedRoute roles={["adopter"]} />}>
             <Route path="/browse" element={<BrowsePetsPage />} />
-            <Route path="/my-applications" element={<MyApplicationsPage/>} />
-            <Route path="/pets/:id/apply" element={<AdoptionApplicationPage />} />
-            <Route path="/my-applications/:applicationId" element={<ApplicationDetailsPage />} />
+            <Route path="/my-applications" element={<MyApplicationsPage />} />
+            <Route
+              path="/pets/:id/apply"
+              element={<AdoptionApplicationPage />}
+            />
+            <Route
+              path="/my-applications/:applicationId"
+              element={<ApplicationDetailsPage />}
+            />
           </Route>
 
           {/* SHELTER + ADMIN */}
           <Route element={<ProtectedRoute roles={["shelter", "admin"]} />}>
             <Route path="/shelter/pets" element={<NgoDashboard />} />
+            <Route path="/shelter/adoptions" element={<AdoptionRequests />} />
             <Route
-              path="/shelter/adoptionreq"
-              element={<AdoptionRequests />}
+              path="/shelter/adoptions/:applicationId"
+              element={<ShelterApplicationDetailPage />}
             />
             <Route path="/shelter/pets/add" element={<AddPetPage />} />
             <Route path="/shelter/pets/:id/add" element={<AddPetPage />} />

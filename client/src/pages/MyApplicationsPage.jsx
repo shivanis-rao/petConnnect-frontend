@@ -22,6 +22,38 @@ const STATUS_CONFIG = {
   },
   approved: {
     label: "Approved",
+    color: "bg-blue-50 text-blue-700 border border-blue-200",
+    icon: (
+      <svg
+        className="w-4 h-4"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+      >
+        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+        <polyline points="22 4 12 14.01 9 11.01" />
+      </svg>
+    ),
+  },
+  home_visit: {
+    label: "Home Visit",
+    color: "bg-purple-50 text-purple-700 border border-purple-200",
+    icon: (
+      <svg
+        className="w-4 h-4"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+      >
+        <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+        <polyline points="9 22 9 12 15 12 15 22" />
+      </svg>
+    ),
+  },
+  completed: {
+    label: "Adopted! 🎉",
     color: "bg-green-50 text-green-700 border border-green-200",
     icon: (
       <svg

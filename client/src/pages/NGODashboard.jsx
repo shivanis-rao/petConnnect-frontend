@@ -1,5 +1,21 @@
 import { useState, useEffect } from "react";
 import { useNavigate, NavLink } from "react-router-dom";
+// import {
+//   MoreHorizontal,
+//   MapPin,
+//   Clock,
+//   ChevronDown,
+//   FileText,
+//   Heart,
+//   Plus,
+//   List,
+//   MessageSquare,
+//   BarChart2,
+//   LogOut,
+//   PawPrint,
+// } from "lucide-react";
+
+//✅ Keep only what NGODashboard itself uses
 import {
   MoreHorizontal,
   MapPin,
@@ -8,62 +24,61 @@ import {
   FileText,
   Heart,
   Plus,
-  List,
-  MessageSquare,
-  BarChart2,
-  LogOut,
   PawPrint,
 } from "lucide-react";
+
+// ✅ Add this import
+import ShelterSidebar from "../components/shelter/ShelterSidebar";
 import api from "../services/Apiservices";
 
 // ── SIDEBAR ────────────────────────────────────────────────────────────────
-const navItems = [
-  { label: "Adoption Requests", icon: Heart, to: "/shelter/adoptions" },
-  { label: "Your Pet Listings", icon: List, to: "/shelter/pets" },
-  { label: "Messages", icon: MessageSquare, to: "/shelter/messages" },
-  { label: "Analytics", icon: BarChart2, to: "/shelter/analytics" },
-];
+// const navItems = [
+//   { label: "Adoption Requests", icon: Heart, to: "/shelter/adoptions" },
+//   { label: "Your Pet Listings", icon: List, to: "/shelter/pets" },
+//   { label: "Messages", icon: MessageSquare, to: "/shelter/messages" },
+//   { label: "Analytics", icon: BarChart2, to: "/shelter/analytics" },
+// ];
 
-function Sidebar() {
-  const navigate = useNavigate();
-  return (
-    <aside className="w-52 min-h-screen bg-white flex flex-col border-r border-gray-100 shrink-0">
-      <div className="px-5 pt-6 pb-5">
-        <button
-          onClick={() => navigate("/shelter/pets/add")}
-          className="w-full flex items-center justify-center gap-2 bg-[#3182CE] hover:bg-[#2b6cb0] transition-colors text-white text-sm font-medium py-2 px-4 rounded-md"
-        >
-          <Plus size={15} />
-          Add Pet
-        </button>
-      </div>
-      <nav className="flex-1 px-3">
-        {navItems.map(({ label, icon: Icon, to }) => (
-          <NavLink
-            key={to}
-            to={to}
-            className={({ isActive }) =>
-              `flex items-center gap-3 px-3 py-2.5 rounded-md mb-0.5 text-sm transition-colors ${
-                isActive
-                  ? "bg-blue-50 text-[#3182CE] font-medium"
-                  : "text-gray-500 hover:text-[#3182CE] hover:bg-blue-50"
-              }`
-            }
-          >
-            <Icon size={15} />
-            <span>{label}</span>
-          </NavLink>
-        ))}
-      </nav>
-      <div className="px-3 pb-6">
-        <button className="flex items-center gap-3 px-3 py-2.5 w-full rounded-md text-sm text-red-400 hover:text-red-600 hover:bg-red-50 transition-colors">
-          <LogOut size={15} />
-          <span>Logout</span>
-        </button>
-      </div>
-    </aside>
-  );
-}
+// function Sidebar() {
+//   const navigate = useNavigate();
+//   return (
+//     <aside className="w-52 min-h-screen bg-white flex flex-col border-r border-gray-100 shrink-0">
+//       <div className="px-5 pt-6 pb-5">
+//         <button
+//           onClick={() => navigate("/shelter/pets/add")}
+//           className="w-full flex items-center justify-center gap-2 bg-[#3182CE] hover:bg-[#2b6cb0] transition-colors text-white text-sm font-medium py-2 px-4 rounded-md"
+//         >
+//           <Plus size={15} />
+//           Add Pet
+//         </button>
+//       </div>
+//       <nav className="flex-1 px-3">
+//         {navItems.map(({ label, icon: Icon, to }) => (
+//           <NavLink
+//             key={to}
+//             to={to}
+//             className={({ isActive }) =>
+//               `flex items-center gap-3 px-3 py-2.5 rounded-md mb-0.5 text-sm transition-colors ${
+//                 isActive
+//                   ? "bg-blue-50 text-[#3182CE] font-medium"
+//                   : "text-gray-500 hover:text-[#3182CE] hover:bg-blue-50"
+//               }`
+//             }
+//           >
+//             <Icon size={15} />
+//             <span>{label}</span>
+//           </NavLink>
+//         ))}
+//       </nav>
+//       <div className="px-3 pb-6">
+//         <button className="flex items-center gap-3 px-3 py-2.5 w-full rounded-md text-sm text-red-400 hover:text-red-600 hover:bg-red-50 transition-colors">
+//           <LogOut size={15} />
+//           <span>Logout</span>
+//         </button>
+//       </div>
+//     </aside>
+//   );
+// }
 
 // ── STAT CARD ──────────────────────────────────────────────────────────────
 function StatCard({ label, value, children }) {
@@ -256,7 +271,8 @@ export default function NgoDashboard() {
 
   return (
     <div className="flex min-h-screen bg-[#f5f7fa]">
-      <Sidebar />
+      {/*<Sidebar />*/}
+      <ShelterSidebar pendingCount={stats.pendingRequests} />
 
       <div className="flex-1 p-6 overflow-y-auto">
         <div className="max-w-5xl">

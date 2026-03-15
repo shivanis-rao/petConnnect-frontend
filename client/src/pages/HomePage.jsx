@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import UserService from "../services/UserService";
+import useAuth from "../hooks/AuthContext";
 
 export default function HomePage() {
   const navigate = useNavigate();
-  const isLoggedIn = UserService.isAuthenticated();
-  const user = UserService.getCurrentUser();
+  const { isAuthenticated, currentUser, logout } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
@@ -54,11 +54,28 @@ export default function HomePage() {
             >
               About
             </a>
+            {/* ✅ Add this — role based links */}
+            {currentUser?.role === "shelter" && (
+              <Link
+                to="/shelter/pets"
+                className="text-gray-600 hover:text-blue-600 text-sm font-medium transition"
+              >
+                Dashboard
+              </Link>
+            )}
+            {currentUser?.role === "adopter" && (
+              <Link
+                to="/browse"
+                className="text-gray-600 hover:text-blue-600 text-sm font-medium transition"
+              >
+                Browse Pets
+              </Link>
+            )}
           </div>
 
           {/* Desktop Auth */}
           <div className="hidden md:flex items-center gap-3">
-            {!isLoggedIn ? (
+            {!isAuthenticated ? (
               <button
                 onClick={() => navigate("/login")}
                 className="bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-5 py-2 rounded-lg transition"
@@ -68,11 +85,11 @@ export default function HomePage() {
             ) : (
               <div className="flex items-center gap-4">
                 <span className="text-sm text-gray-600">
-                  Hi, {user?.name?.split(" ")[0]}
+                  Hi, {currentUser?.name?.split(" ")[0]}
                 </span>
                 <button
                   onClick={() => {
-                    UserService.logout();
+                    logout();
                     navigate("/");
                   }}
                   className="text-sm bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition"
@@ -144,7 +161,27 @@ export default function HomePage() {
             >
               About
             </a>
-            {!isLoggedIn ? (
+            {/* ✅ Add role based links in mobile too */}
+            {currentUser?.role === "shelter" && (
+              <Link
+                to="/shelter/pets"
+                className="text-gray-600 text-sm font-medium"
+                onClick={() => setMenuOpen(false)}
+              >
+                Dashboard
+              </Link>
+            )}
+            {currentUser?.role === "adopter" && (
+              <Link
+                to="/browse"
+                className="text-gray-600 text-sm font-medium"
+                onClick={() => setMenuOpen(false)}
+              >
+                Browse Pets
+              </Link>
+            )}
+            {/* ✅ Fix logout in mobile too */}
+            {!isAuthenticated ? (
               <button
                 onClick={() => {
                   navigate("/login");
@@ -157,11 +194,11 @@ export default function HomePage() {
             ) : (
               <div className="flex flex-col gap-2">
                 <span className="text-sm text-gray-600">
-                  Hi, {user?.name?.split(" ")[0]}
+                  Hi, {currentUser?.name?.split(" ")[0]}
                 </span>
                 <button
                   onClick={() => {
-                    UserService.logout();
+                    logout();
                     navigate("/");
                     setMenuOpen(false);
                   }}
@@ -373,7 +410,7 @@ export default function HomePage() {
           </div>
         </div>
         <div className="max-w-5xl mx-auto mt-6 pt-4 border-t border-gray-100 text-xs text-gray-400 text-center">
-          PetConnect © 2026. All rights reserved. 
+          PetConnect © 2026. All rights reserved.
         </div>
       </footer>
     </div>
