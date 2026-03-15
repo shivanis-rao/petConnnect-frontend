@@ -1,8 +1,8 @@
 import { useState } from "react";
 
-const ResetPasswordForm = ({ onSubmit, isLoading, error, success  }) => {
-  const [newPassword, setNewPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+const ResetPasswordForm = ({ onSubmit, isLoading, error, success }) => {
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [validationError, setValidationError] = useState("");
 
@@ -11,7 +11,7 @@ const ResetPasswordForm = ({ onSubmit, isLoading, error, success  }) => {
     setValidationError("");
 
     if (newPassword.length < 8) {
-      setValidationError('Password must be at least 8 characters');
+      setValidationError("Password must be at least 8 characters");
       return;
     }
 
@@ -31,13 +31,27 @@ const ResetPasswordForm = ({ onSubmit, isLoading, error, success  }) => {
         <div className="bg-white rounded-2xl shadow-xl w-full max-w-md p-10 text-center">
           <div className="flex justify-center mb-5">
             <div className="bg-green-100 rounded-2xl w-16 h-16 flex items-center justify-center">
-              <svg className="w-8 h-8 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              <svg
+                className="w-8 h-8 text-green-600"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M5 13l4 4L19 7"
+                />
               </svg>
             </div>
           </div>
-          <h2 className="text-xl font-bold text-gray-900 mb-2">Password Reset Successful!</h2>
-          <p className="text-gray-400 text-sm">You are now logged in. This tab will close automatically.</p>
+          <h2 className="text-xl font-bold text-gray-900 mb-2">
+            Password Reset Successful!
+          </h2>
+          <p className="text-gray-400 text-sm">
+            You are now logged in. This tab will close automatically.
+          </p>
         </div>
       </div>
     );

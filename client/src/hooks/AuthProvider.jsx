@@ -1,21 +1,61 @@
-import { useState } from 'react';
-import { AuthContext } from './AuthContext';
-import UserService from '../services/UserService';
+import { useState } from "react";
+import { AuthContext } from "./AuthContext";
+import UserService from "../services/UserService";
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(UserService.getCurrentUser());
+  const [currentUser, setCurrentUser] = useState(
+    () => UserService.getCurrentUser(), // lazy init — reads localStorage once
+  );
 
-  const login = (userData) => {
-    setUser(userData);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const login = async (payload) => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      const result = await UserService.login(payload); // ✅ calls API
+      if (result.success) {
+        UserService.saveSession(result.data); // ✅ saves to localStorage
+        setCurrentUser(result.data.user); // ✅ updates shared state
+        setIsLoading(false);
+        return { success: true, user: result.data.user };
+      } else {
+        setError(result.message || "Login failed");
+        setIsLoading(false);
+        return { success: false };
+      }
+    } catch (err) {
+      const message =
+        err.response?.data?.message ||
+        err.message ||
+        "Login failed. Please try again.";
+      setError(message);
+      setIsLoading(false);
+      return { success: false };
+    }
   };
 
   const logout = () => {
     UserService.logout();
-    setUser(null);
+    setCurrentUser(null);
   };
 
+  const clearError = () => setError(null);
+
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider
+      value={{
+        currentUser, // ✅ full user object with role
+        isAuthenticated: !!currentUser,
+        isBootstrapping: false,
+        isLoading,
+        error,
+        clearError,
+        login,
+        logout,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

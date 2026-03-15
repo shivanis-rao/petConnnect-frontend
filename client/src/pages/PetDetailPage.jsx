@@ -9,18 +9,16 @@ const PetDetailPage = () => {
   const navigate = useNavigate();
 
   const handleAdopt = () => {
-  if (!UserService.isAuthenticated()) {
-    navigate("/login", { state: { from: `/pets/${id}` } });
-    return;
-  }
-  navigate(`/pets/${id}/apply`);
-};
+    if (!UserService.isAuthenticated()) {
+      navigate("/login", { state: { from: `/pets/${id}` } });
+      return;
+    }
+    navigate(`/pets/${id}/apply`);
+  };
 
   const [pet, setPet] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
-
 
   useEffect(() => {
     const fetchPet = async () => {

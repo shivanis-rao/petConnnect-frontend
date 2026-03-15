@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import api from "../services/Apiservices";
 
-const registrationTypes = ["Society", "Trust", "Section 8 Company"];
+const registrationTypes = ["Society", "Trust", "section8"];
 
 export default function NgoRegistration() {
   const location = useLocation();
@@ -82,15 +82,15 @@ export default function NgoRegistration() {
 
       navigate("/shelter/waiting-area");
     } catch (err) {
-  if (err.response?.status === 409) {
-    setError("You already have a shelter registered.");
-  } else {
-    setError("Something went wrong. Please try again.");
-  }
-  setTimeout(() => setError(""), 3000);
-} finally {
-  setLoading(false);
-}
+      if (err.response?.status === 409) {
+        setError("You already have a shelter registered.");
+      } else {
+        setError("Something went wrong. Please try again.");
+      }
+      setTimeout(() => setError(""), 3000);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -101,8 +101,18 @@ export default function NgoRegistration() {
           "linear-gradient(135deg, #f0f7f4 0%, #e8f4fd 50%, #f0f0fa 100%)",
       }}
     >
-      
-       
+      {/* Navbar */}
+      <nav className="bg-white/80 backdrop-blur-md shadow-sm px-8 py-4 flex items-center justify-between sticky top-0 z-50">
+        <div className="flex items-center gap-2">
+          <div className="w-9 h-9 bg-blue-100 rounded-xl flex items-center justify-center text-blue-600 text-lg shadow-sm">
+            🐾
+          </div>
+          <span className="font-bold text-lg text-gray-900 tracking-tight">
+            PetConnect
+          </span>
+        </div>
+      </nav>
+
       {/* Content */}
       <div className="flex justify-center px-4 py-10">
         <div className="w-full max-w-2xl">
