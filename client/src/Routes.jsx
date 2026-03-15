@@ -28,6 +28,8 @@ import MyApplicationsPage from "./pages/MyApplicationsPage";
 import ApplicationDetailsPage from "./pages/ApplicationDetailsPage";
 import AdoptionRequests from "./pages/ShelterAdoptionRequests.jsx";
 import ShelterApplicationDetailPage from "./pages/ShelterApplicationDetailPage";
+import GovernmentRegistrationPage from "./pages/GovernmentRegistrationPage";
+import RescuerRegistrationPage from "./pages/RescuerRegistrationPage";
 
 const Layout = ({ children }) => {
   const location = useLocation();
@@ -36,7 +38,10 @@ const Layout = ({ children }) => {
     "/shelter-register",
     "/shelter/ngo-register",
     "/shelter/waiting-area",
+    "/shelter/government-register",
+    "/shelter/rescuer-register",
   ];
+
   const showNavbar = !hideNavbarOn.includes(location.pathname);
   return (
     <>
@@ -95,6 +100,14 @@ const AppRoutes = () => {
             <Route path="/shelter/pets/:id/edit" element={<EditPetPage />} />
             <Route path="/shelter-register" element={<ShelterBasePage />} />
             <Route path="/shelter/ngo-register" element={<NgoRegistration />} />
+            <Route
+              path="/shelter/government-register"
+              element={<GovernmentRegistrationPage />}
+            />
+            <Route
+              path="/shelter/rescuer-register"
+              element={<RescuerRegistrationPage />}
+            />
             <Route path="/shelter/waiting-area" element={<WaitingPage />} />
           </Route>
 
