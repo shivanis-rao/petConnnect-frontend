@@ -20,8 +20,12 @@ import EditPetPage from './pages/EditPetPage';
 import AdoptionApplicationPage from './pages/AdoptionApplicationPage';
 import MyApplicationsPage from './pages/MyApplicationsPage';
 import ApplicationDetailsPage from './pages/ApplicationDetailsPage';
+
 import GovernmentRegistrationPage from './pages/GovernmentRegistrationPage';
 import RescuerRegistrationPage from './pages/RescuerRegistrationPage';
+
+import MessagesPage from './pages/MessagesPage';
+
 
 const Layout = ({ children }) => {
   const location = useLocation();
@@ -74,6 +78,7 @@ const AppRoutes = () => {
             <Route path="/shelter/government-register" element={<GovernmentRegistrationPage />} />
             <Route path="/shelter/rescuer-register" element={<RescuerRegistrationPage />} />
             <Route path="/shelter/waiting-area" element={<WaitingPage />} />
+            <Route path="/shelter/messages" element={<MessagesPage />} />
           </Route>
 
           {/* ADMIN ONLY */}
