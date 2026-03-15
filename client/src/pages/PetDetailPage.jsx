@@ -259,7 +259,7 @@ const PetDetailPage = () => {
   const [error, setError] = useState(null);
   const [chatOpen, setChatOpen] = useState(false);
 
-  const handleAdopt = () => {
+ const handleAdopt = () => {
     if (!UserService.isAuthenticated()) {
       navigate("/login", { state: { from: `/pets/${id}` } });
       return;
@@ -268,17 +268,18 @@ const PetDetailPage = () => {
   };
 
   const handleChat = () => {
-  if (!UserService.isAuthenticated()) {
-    navigate("/login", { state: { from: `/pets/${id}` } });
-    return;
-  }
-  const currentUser = UserService.getCurrentUser();
-  if (currentUser?.role === 'shelter' || currentUser?.role === 'admin') {
-    alert('Shelter accounts cannot send adoption inquiries.');
-    return;
-  }
-  setChatOpen(true);
-};
+    if (!UserService.isAuthenticated()) {
+      navigate("/login", { state: { from: `/pets/${id}` } });
+      return;
+    }
+    const currentUser = UserService.getCurrentUser();
+    if (currentUser?.role === 'shelter' || currentUser?.role === 'admin') {
+      alert('Shelter accounts cannot send adoption inquiries.');
+      return;
+    }
+    setChatOpen(true);
+  };
+
 
   useEffect(() => {
     const fetchPet = async () => {

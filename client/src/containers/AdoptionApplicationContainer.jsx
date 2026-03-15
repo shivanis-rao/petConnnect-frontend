@@ -5,30 +5,30 @@ import AdoptionService from "../services/Adoptionservice.js";
 import AdoptionApplicationForm from "../components/pets/ApplicationAdoptionForm";
 
 const AdoptionApplicationContainer = () => {
-  const { id } = useParams();       // petId from URL e.g. /pets/1/apply
+  const { id } = useParams(); // petId from URL e.g. /pets/1/apply
   const navigate = useNavigate();
 
-  const [pet, setPet]               = useState(null);
+  const [pet, setPet] = useState(null);
   const [loadingPet, setLoadingPet] = useState(true);
   const [submitting, setSubmitting] = useState(false);
-  const [submitted, setSubmitted]   = useState(false);
-  const [error, setError]           = useState(null);
-  const [step, setStep]             = useState(1);
+  const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState(null);
+  const [step, setStep] = useState(1);
 
   const [form, setForm] = useState({
     // Pre-filled from backend (read-only fields)
-    name:                "",
-    phone:               "",
-    email:               "",
+    name: "",
+    phone: "",
+    email: "",
     past_pet_experience: 0,
 
     // User-filled fields
-    current_occupation:  "",
-    address:             "",
-    living_situation:    "",   // "Family" | "I live alone" | "House/Room mates"
-    family_agreement:    "",   // "Yes" | "No" | "N/A"
-    landlord_permission: "",   // "Yes" | "No" | "I am the owner"
-    vacation_care:       "",
+    current_occupation: "",
+    address: "",
+    living_situation: "", // "Family" | "I live alone" | "House/Room mates"
+    family_agreement: "", // "Yes" | "No" | "N/A"
+    landlord_permission: "", // "Yes" | "No" | "I am the owner"
+    vacation_care: "",
   });
 
   // ── Fetch pet details + prefill user data from backend ──────────────
@@ -46,9 +46,9 @@ const AdoptionApplicationContainer = () => {
         if (user) {
           setForm((prev) => ({
             ...prev,
-            name:                `${user.first_name || ""} ${user.last_name || ""}`.trim(),
-            phone:               user.phone               || "",
-            email:               user.email               || "",
+            name: `${user.first_name || ""} ${user.last_name || ""}`.trim(),
+            phone: user.phone || "",
+            email: user.email || "",
             past_pet_experience: user.pet_experience_years ?? 0,
           }));
         }
@@ -77,19 +77,20 @@ const AdoptionApplicationContainer = () => {
 
       await AdoptionService.submitApplication(id, {
         shelterId,
-        current_occupation:  form.current_occupation,
-        address:             form.address,
-        living_situation:    form.living_situation,
-        family_agreement:    form.family_agreement  || "N/A",
-        landlord_permission: form.landlord_permission,
-        vacation_care:       form.vacation_care,
+        currentOccupation: form.current_occupation,
+        address: form.address,
+        livingArrangement: form.living_situation,
+        familyAgreement: form.family_agreement || "N/A",
+        landlordAllowsPets: form.landlord_permission,
+        petCareWhenAway: form.vacation_care,
       });
 
       setSubmitted(true);
     } catch (err) {
       // Show backend error message if available
       const message =
-        err?.response?.data?.message || "Something went wrong. Please try again.";
+        err?.response?.data?.message ||
+        "Something went wrong. Please try again.";
       setError(message);
       console.error("Submit error:", err);
     } finally {

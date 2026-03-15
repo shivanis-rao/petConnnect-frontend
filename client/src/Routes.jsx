@@ -1,35 +1,48 @@
-import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
-import ProtectedRoute from './components/common/ProtectedRoute';
-import Navbar from './components/common/Navbar';
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
+  useLocation,
+} from "react-router-dom";
+import ProtectedRoute from "./components/common/ProtectedRoute";
+import Navbar from "./components/common/Navbar";
 
-import LoginPage from './pages/LoginPage';
-import RegisterPage from './pages/RegisterPage';
-import BrowsePetsPage from './pages/BrowsePetsPage';
-import PetDetailPage from './pages/PetDetailPage';
-import ResetPasswordPage from './pages/Resetpasswordpage';
-import ForgotPasswordPage from './pages/Forgotpasswordpage';
-import ProfileCompletionPage from './pages/ProfileCompletionPage';
-import AddPetPage from './pages/AddPetPage';
-import HomePage from './pages/HomePage';
-import UnauthorizedPage from './pages/UnauthorizedPage';
-import ShelterBasePage from './pages/ShelterBasePage';
-import NgoRegistration from './pages/NgoRegistration';
-import WaitingPage from './pages/WaitingPage';
-import NgoDashboard from './pages/NGODashboard';
-import EditPetPage from './pages/EditPetPage';
-import AdoptionApplicationPage from './pages/AdoptionApplicationPage';
-import MyApplicationsPage from './pages/MyApplicationsPage';
-import ApplicationDetailsPage from './pages/ApplicationDetailsPage';
-
-import GovernmentRegistrationPage from './pages/GovernmentRegistrationPage';
-import RescuerRegistrationPage from './pages/RescuerRegistrationPage';
-
-import MessagesPage from './pages/MessagesPage';
-
+import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
+import BrowsePetsPage from "./pages/BrowsePetsPage";
+import PetDetailPage from "./pages/PetDetailPage";
+import ResetPasswordPage from "./pages/Resetpasswordpage";
+import ForgotPasswordPage from "./pages/Forgotpasswordpage";
+import ProfileCompletionPage from "./pages/ProfileCompletionPage";
+import AddPetPage from "./pages/AddPetPage";
+import HomePage from "./pages/HomePage";
+import UnauthorizedPage from "./pages/UnauthorizedPage";
+import ShelterBasePage from "./pages/ShelterBasePage";
+import NgoRegistration from "./pages/NgoRegistration";
+import WaitingPage from "./pages/WaitingPage";
+import NgoDashboard from "./pages/NGODashboard";
+import EditPetPage from "./pages/EditPetPage";
+import AdoptionApplicationPage from "./pages/AdoptionApplicationPage";
+import MyApplicationsPage from "./pages/MyApplicationsPage";
+import ApplicationDetailsPage from "./pages/ApplicationDetailsPage";
+import AdoptionRequests from "./pages/ShelterAdoptionRequests.jsx";
+import ShelterApplicationDetailPage from "./pages/ShelterApplicationDetailPage";
+import GovernmentRegistrationPage from "./pages/GovernmentRegistrationPage";
+import RescuerRegistrationPage from "./pages/RescuerRegistrationPage";
+import MessagesPage from "./pages/MessagesPage";
 
 const Layout = ({ children }) => {
   const location = useLocation();
-  const hideNavbarOn = ["/", "/shelter-register"];
+  const hideNavbarOn = [
+    "/",
+    "/shelter-register",
+    "/shelter/ngo-register",
+    "/shelter/waiting-area",
+    "/shelter/government-register",
+    "/shelter/rescuer-register",
+  ];
+
   const showNavbar = !hideNavbarOn.includes(location.pathname);
   return (
     <>
@@ -44,7 +57,6 @@ const AppRoutes = () => {
     <BrowserRouter>
       <Layout>
         <Routes>
-
           {/* PUBLIC */}
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
@@ -60,7 +72,7 @@ const AppRoutes = () => {
           </Route>
 
           {/* ADOPTER ONLY */}
-          <Route element={<ProtectedRoute roles={['adopter']} />}>
+          <Route element={<ProtectedRoute roles={["adopter"]} />}>
             <Route path="/browse" element={<BrowsePetsPage />} />
             <Route path="/my-applications" element={<MyApplicationsPage />} />
             <Route path="/pets/:id/apply" element={<AdoptionApplicationPage />} />
@@ -68,8 +80,10 @@ const AppRoutes = () => {
           </Route>
 
           {/* SHELTER + ADMIN */}
-          <Route element={<ProtectedRoute roles={['shelter', 'admin']} />}>
+          <Route element={<ProtectedRoute roles={["shelter", "admin"]} />}>
             <Route path="/shelter/pets" element={<NgoDashboard />} />
+            <Route path="/shelter/adoptions" element={<AdoptionRequests />} />
+            <Route path="/shelter/adoptions/:applicationId" element={<ShelterApplicationDetailPage />} />
             <Route path="/shelter/pets/add" element={<AddPetPage />} />
             <Route path="/shelter/pets/:id/add" element={<AddPetPage />} />
             <Route path="/shelter/pets/:id/edit" element={<EditPetPage />} />
@@ -82,7 +96,7 @@ const AppRoutes = () => {
           </Route>
 
           {/* ADMIN ONLY */}
-          <Route element={<ProtectedRoute roles={['admin']} />}>
+          <Route element={<ProtectedRoute roles={["admin"]} />}>
             <Route path="/admin/dashboard" element={<div>Admin Dashboard</div>} />
             <Route path="/admin/users" element={<div>Manage Users</div>} />
             <Route path="/admin/shelters" element={<div>Manage Shelters</div>} />
@@ -90,7 +104,6 @@ const AppRoutes = () => {
 
           {/* CATCH ALL */}
           <Route path="*" element={<Navigate to="/unauthorized" replace />} />
-
         </Routes>
       </Layout>
     </BrowserRouter>
