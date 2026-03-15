@@ -20,10 +20,12 @@ import EditPetPage from './pages/EditPetPage';
 import AdoptionApplicationPage from './pages/AdoptionApplicationPage';
 import MyApplicationsPage from './pages/MyApplicationsPage';
 import ApplicationDetailsPage from './pages/ApplicationDetailsPage';
+import GovernmentRegistrationPage from './pages/GovernmentRegistrationPage';
+import RescuerRegistrationPage from './pages/RescuerRegistrationPage';
 
 const Layout = ({ children }) => {
   const location = useLocation();
-  const hideNavbarOn = ["/","/shelter-register"];
+  const hideNavbarOn = ["/", "/shelter-register"];
   const showNavbar = !hideNavbarOn.includes(location.pathname);
   return (
     <>
@@ -56,7 +58,7 @@ const AppRoutes = () => {
           {/* ADOPTER ONLY */}
           <Route element={<ProtectedRoute roles={['adopter']} />}>
             <Route path="/browse" element={<BrowsePetsPage />} />
-            <Route path="/my-applications" element={<MyApplicationsPage/>} />
+            <Route path="/my-applications" element={<MyApplicationsPage />} />
             <Route path="/pets/:id/apply" element={<AdoptionApplicationPage />} />
             <Route path="/my-applications/:applicationId" element={<ApplicationDetailsPage />} />
           </Route>
@@ -69,6 +71,8 @@ const AppRoutes = () => {
             <Route path="/shelter/pets/:id/edit" element={<EditPetPage />} />
             <Route path="/shelter-register" element={<ShelterBasePage />} />
             <Route path="/shelter/ngo-register" element={<NgoRegistration />} />
+            <Route path="/shelter/government-register" element={<GovernmentRegistrationPage />} />
+            <Route path="/shelter/rescuer-register" element={<RescuerRegistrationPage />} />
             <Route path="/shelter/waiting-area" element={<WaitingPage />} />
           </Route>
 

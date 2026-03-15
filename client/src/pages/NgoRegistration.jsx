@@ -101,24 +101,8 @@ export default function NgoRegistration() {
           "linear-gradient(135deg, #f0f7f4 0%, #e8f4fd 50%, #f0f0fa 100%)",
       }}
     >
-      {/* Navbar */}
-      <nav className="bg-white/80 backdrop-blur-md shadow-sm px-8 py-4 flex items-center justify-between sticky top-0 z-50">
-        <div className="flex items-center gap-2">
-          <div className="w-9 h-9 bg-blue-100 rounded-xl flex items-center justify-center text-blue-600 text-lg shadow-sm">
-            🐾
-          </div>
-          <span className="font-bold text-lg text-gray-900 tracking-tight">
-            PetConnect
-          </span>
-        </div>
-        <div className="flex items-center gap-1 bg-gray-100 rounded-full px-2 py-1 text-sm">
-          <span className="px-3 py-1 text-gray-500">Home</span>
-          <span className="px-3 py-1 bg-white text-blue-600 font-semibold rounded-full shadow-sm">
-            Shelter
-          </span>
-        </div>
-      </nav>
-
+      
+       
       {/* Content */}
       <div className="flex justify-center px-4 py-10">
         <div className="w-full max-w-2xl">
