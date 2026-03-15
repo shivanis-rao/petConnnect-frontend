@@ -70,6 +70,11 @@ const AdoptionService = {
     return Apiservices.get("/adoption/my-applications");
   },
 
+  // GET /api/adoption/:applicationId  — for ApplicationDetailsPage
+  getApplicationById: (applicationId) => {
+    return Apiservices.get(`/adoption/${applicationId}`);
+  },
+
   // GET /api/adoption/shelter/:shelterId
   getApplicationsForShelter: (shelterId) => {
     return Apiservices.get(`/adoption/shelter/${shelterId}`);

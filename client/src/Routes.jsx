@@ -19,6 +19,7 @@ import NgoDashboard from './pages/NGODashboard';
 import EditPetPage from './pages/EditPetPage';
 import AdoptionApplicationPage from './pages/AdoptionApplicationPage';
 import MyApplicationsPage from './pages/MyApplicationsPage';
+import ApplicationDetailsPage from './pages/ApplicationDetailsPage';
 
 const Layout = ({ children }) => {
   const location = useLocation();
@@ -57,6 +58,7 @@ const AppRoutes = () => {
             <Route path="/browse" element={<BrowsePetsPage />} />
             <Route path="/my-applications" element={<MyApplicationsPage/>} />
             <Route path="/pets/:id/apply" element={<AdoptionApplicationPage />} />
+            <Route path="/my-applications/:applicationId" element={<ApplicationDetailsPage />} />
           </Route>
 
           {/* SHELTER + ADMIN */}
