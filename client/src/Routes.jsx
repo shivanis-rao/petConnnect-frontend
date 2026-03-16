@@ -31,8 +31,7 @@ import ShelterApplicationDetailPage from "./pages/ShelterApplicationDetailPage";
 import GovernmentRegistrationPage from "./pages/GovernmentRegistrationPage";
 import RescuerRegistrationPage from "./pages/RescuerRegistrationPage";
 import MessagesPage from "./pages/MessagesPage";
-import Footer from './components/common/Footer'
-
+import Footer from "./components/common/Footer";
 
 const Layout = ({ children }) => {
   const location = useLocation();
@@ -47,11 +46,20 @@ const Layout = ({ children }) => {
 
   const showNavbar = !hideNavbarOn.includes(location.pathname);
 
-const hideFooterOn = ["/", "/shelter-register"]; const showFooter = !hideFooterOn.includes(location.pathname);
+  const hideFooterOn = [
+    "/",
+    "/shelter-register",
+    "/shelter/ngo-register",
+    "/shelter/waiting-area",
+    "/shelter/government-register",
+    "/shelter/rescuer-register",
+    "/shelter/adoptions/:applicationId",
+    "/shelter/adoptions",
+  ];
+  const showFooter = !hideFooterOn.includes(location.pathname);
 
   return (
     <>
-
       {showNavbar && <Navbar />}
       {children}
       {showFooter && <Footer />}
@@ -75,38 +83,62 @@ const AppRoutes = () => {
 
           {/* ANY LOGGED IN USER */}
           <Route element={<ProtectedRoute />}>
-            <Route path="/complete-profile" element={<ProfileCompletionPage />} />
+            <Route
+              path="/complete-profile"
+              element={<ProfileCompletionPage />}
+            />
           </Route>
 
           {/* ADOPTER ONLY */}
           <Route element={<ProtectedRoute roles={["adopter"]} />}>
             <Route path="/browse" element={<BrowsePetsPage />} />
             <Route path="/my-applications" element={<MyApplicationsPage />} />
-            <Route path="/pets/:id/apply" element={<AdoptionApplicationPage />} />
-            <Route path="/my-applications/:applicationId" element={<ApplicationDetailsPage />} />
+            <Route
+              path="/pets/:id/apply"
+              element={<AdoptionApplicationPage />}
+            />
+            <Route
+              path="/my-applications/:applicationId"
+              element={<ApplicationDetailsPage />}
+            />
           </Route>
 
           {/* SHELTER + ADMIN */}
           <Route element={<ProtectedRoute roles={["shelter", "admin"]} />}>
             <Route path="/shelter/pets" element={<NgoDashboard />} />
             <Route path="/shelter/adoptions" element={<AdoptionRequests />} />
-            <Route path="/shelter/adoptions/:applicationId" element={<ShelterApplicationDetailPage />} />
+            <Route
+              path="/shelter/adoptions/:applicationId"
+              element={<ShelterApplicationDetailPage />}
+            />
             <Route path="/shelter/pets/add" element={<AddPetPage />} />
             <Route path="/shelter/pets/:id/add" element={<AddPetPage />} />
             <Route path="/shelter/pets/:id/edit" element={<EditPetPage />} />
             <Route path="/shelter-register" element={<ShelterBasePage />} />
             <Route path="/shelter/ngo-register" element={<NgoRegistration />} />
-            <Route path="/shelter/government-register" element={<GovernmentRegistrationPage />} />
-            <Route path="/shelter/rescuer-register" element={<RescuerRegistrationPage />} />
+            <Route
+              path="/shelter/government-register"
+              element={<GovernmentRegistrationPage />}
+            />
+            <Route
+              path="/shelter/rescuer-register"
+              element={<RescuerRegistrationPage />}
+            />
             <Route path="/shelter/waiting-area" element={<WaitingPage />} />
             <Route path="/shelter/messages" element={<MessagesPage />} />
           </Route>
 
           {/* ADMIN ONLY */}
           <Route element={<ProtectedRoute roles={["admin"]} />}>
-            <Route path="/admin/dashboard" element={<div>Admin Dashboard</div>} />
+            <Route
+              path="/admin/dashboard"
+              element={<div>Admin Dashboard</div>}
+            />
             <Route path="/admin/users" element={<div>Manage Users</div>} />
-            <Route path="/admin/shelters" element={<div>Manage Shelters</div>} />
+            <Route
+              path="/admin/shelters"
+              element={<div>Manage Shelters</div>}
+            />
           </Route>
 
           {/* CATCH ALL */}
