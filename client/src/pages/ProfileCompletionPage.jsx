@@ -1,10 +1,13 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import UserService from "../services/UserService";
+//import axios from "axios";
+//import UserService from "../services/UserService";
+import useAuth from "../hooks/AuthContext";
+import api from "../services/Apiservices";
 
 export default function ProfileCompletionPage() {
   const navigate = useNavigate();
+  const { currentUser } = useAuth();
 
   const [formData, setFormData] = useState({
     location: "",
@@ -31,23 +34,22 @@ export default function ProfileCompletionPage() {
     setError("");
 
     try {
-      const token = UserService.getAccessToken();
-      const userId = localStorage.getItem("userId");
+      //const token = UserService.getAccessToken();
+      //const userId = localStorage.getItem("userId");
 
-      console.log("Token in profile:", token);
-      console.log("UserId in profile:", userId);
+      // console.log("Token in profile:", token);
+      // console.log("UserId in profile:", userId);
 
-      if (!token || token === "null") {
-        setError("Session expired. Please login again.");
-        navigate("/login");
-        return;
-      }
+      // if (!token || token === "null") {
+      //   setError("Session expired. Please login again.");
+      //   navigate("/login");
+      //   return;
+      // }
 
-      await axios.put(
-        `http://localhost:5000/api/users/${userId}/profile`,
-        { ...formData, profile_completed: true },
-        { headers: { Authorization: `Bearer ${token}` } },
-      );
+      await api.put(`/users/${currentUser.id}/profile`, {
+        ...formData,
+        profile_completed: true,
+      });
 
       navigate("/browse");
     } catch (err) {

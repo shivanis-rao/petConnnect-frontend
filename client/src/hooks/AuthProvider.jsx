@@ -40,6 +40,9 @@ export const AuthProvider = ({ children }) => {
     UserService.logout();
     setCurrentUser(null);
   };
+  const setUser = (userData) => {
+    setCurrentUser(userData);
+  };
 
   const clearError = () => setError(null);
 
@@ -54,6 +57,7 @@ export const AuthProvider = ({ children }) => {
         clearError,
         login,
         logout,
+        setUser,
       }}
     >
       {children}
