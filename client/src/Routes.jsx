@@ -31,6 +31,8 @@ import ShelterApplicationDetailPage from "./pages/ShelterApplicationDetailPage";
 import GovernmentRegistrationPage from "./pages/GovernmentRegistrationPage";
 import RescuerRegistrationPage from "./pages/RescuerRegistrationPage";
 import MessagesPage from "./pages/MessagesPage";
+import Footer from './components/common/Footer'
+
 
 const Layout = ({ children }) => {
   const location = useLocation();
@@ -44,10 +46,15 @@ const Layout = ({ children }) => {
   ];
 
   const showNavbar = !hideNavbarOn.includes(location.pathname);
+
+const hideFooterOn = ["/", "/shelter-register"]; const showFooter = !hideFooterOn.includes(location.pathname);
+
   return (
     <>
+
       {showNavbar && <Navbar />}
       {children}
+      {showFooter && <Footer />}
     </>
   );
 };
