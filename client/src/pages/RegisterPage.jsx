@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import UserService from "../services/UserService";
+import useAuth from "../hooks/AuthContext";
 
 export default function RegisterPage() {
+  const { setUser } = useAuth();
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -89,15 +91,10 @@ export default function RegisterPage() {
       const loginRes = await UserService.login({
         email: formData.email,
         password: formData.password,
-        confirmPassword: formData.confirmPassword,
+        //confirmPassword: formData.confirmPassword,
       });
-
-      console.log("Login response:", loginRes);
-      console.log("Access token:", loginRes.data?.accessToken);
-
       UserService.saveSession(loginRes.data);
-      localStorage.setItem("userId", loginRes.data.user.id);
-      localStorage.setItem("role", loginRes.data.user.role);
+      setUser(loginRes.data.user);
 
       if (loginRes.data.user.role === "shelter") {
         navigate("/shelter-register"); // shelter setup page
