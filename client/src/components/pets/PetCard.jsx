@@ -14,7 +14,7 @@ const PetCard = ({ pet }) => {
       {/* Pet Image */}
       <div className="relative">
         <img
-          src={pet.photo_url || "https://placehold.co/400x250?text=No+Photo"}
+          src={pet.images?.[0]?.file_url || "https://placehold.co/400x250?text=No+Photo"}
           alt={pet.name}
           className="w-full h-52 object-cover"
         />
