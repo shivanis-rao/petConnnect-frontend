@@ -17,11 +17,15 @@ const ResetPasswordContainer = () => {
     }
   }, [token, navigate]);
 
-  const handleSubmit = async (newPassword) => {
+  const handleSubmit = async (newPassword, confirmPassword) => {
     setIsLoading(true);
     setError(null);
     try {
-      const result = await UserService.resetPassword(token, newPassword);
+      const result = await UserService.resetPassword(
+        token,
+        newPassword,
+        confirmPassword,
+      );
       if (result.success) {
         setSuccess(true);
         setTimeout(() => {
