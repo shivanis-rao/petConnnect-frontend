@@ -113,17 +113,17 @@ function PetCard({ pet, onEdit, onDelete, onMarkAdopted }) {
   return (
     <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
       <div className="relative">
-        {pet.image_url ? (
-          <img
-            src={pet.image_url}
-            alt={pet.name}
-            className="w-full h-48 object-cover"
-          />
-        ) : (
-          <div className="w-full h-48 bg-gray-100 flex items-center justify-center">
-            <PawPrint size={32} className="text-gray-300" />
-          </div>
-        )}
+        {pet.images?.[0]?.file_url ? (
+        <img
+          src={pet.images[0].file_url}
+          alt={pet.name}
+          className="w-full h-48 object-cover"
+        />
+      ) : (
+        <div className="w-full h-48 bg-gray-100 flex items-center justify-center">
+          <PawPrint size={32} className="text-gray-300" />
+        </div>
+      )}
         <div className="absolute top-2.5 right-2.5">
           <button
             onClick={() => setMenuOpen((o) => !o)}
