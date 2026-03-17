@@ -44,11 +44,8 @@ const UserService = {
     return response.data;
   },
 
-  resetPassword: async (token, newPassword) => {
-    const response = await ApiService.post("/users/reset-password", {
-      token,
-      newPassword,
-    });
+  resetPassword: async (data) => {
+    const response = await ApiService.post("/users/reset-password", data);
     return response.data;
   },
 

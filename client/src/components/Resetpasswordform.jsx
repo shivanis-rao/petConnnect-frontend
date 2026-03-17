@@ -10,17 +10,21 @@ const ResetPasswordForm = ({ onSubmit, isLoading, error, success }) => {
     e.preventDefault();
     setValidationError("");
 
-    if (newPassword.length < 8) {
-      setValidationError("Password must be at least 8 characters");
-      return;
-    }
+    const passwordRegex =
+      /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&*]{8,}$/;
 
     if (newPassword !== confirmPassword) {
       setValidationError("Passwords do not match");
       return;
     }
+    if (!passwordRegex.test(newPassword)) {
+      setValidationError(
+        "Password must be at least 8 characters and include one uppercase letter, one number, and one special character (!@#$%^&*)",
+      );
+      return;
+    }
 
-    onSubmit(newPassword);
+    onSubmit(newPassword, confirmPassword);
   };
 
   const displayError = validationError || error;
@@ -103,7 +107,7 @@ const ResetPasswordForm = ({ onSubmit, isLoading, error, success }) => {
                   type={showPassword ? "text" : "password"}
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
-                  placeholder="Min. 8 characters"
+                  placeholder="Enter your new password"
                   required
                   className="flex-1 text-sm text-gray-700 placeholder-gray-400 outline-none bg-transparent"
                 />
@@ -151,6 +155,31 @@ const ResetPasswordForm = ({ onSubmit, isLoading, error, success }) => {
                   )}
                 </button>
               </div>
+              {newPassword && (
+                <ul className="mt-2 space-y-1">
+                  {[
+                    { rule: /.{8,}/, label: "At least 8 characters" },
+                    { rule: /[A-Z]/, label: "One uppercase letter" },
+                    { rule: /[0-9]/, label: "One number" },
+                    {
+                      rule: /[!@#$%^&*]/,
+                      label: "One special character (!@#$%^&*)",
+                    },
+                  ].map(({ rule, label }) => (
+                    <li
+                      key={label}
+                      className={`text-xs flex items-center gap-1.5 ${
+                        rule.test(newPassword)
+                          ? "text-green-500"
+                          : "text-gray-400"
+                      }`}
+                    >
+                      <span>{rule.test(newPassword) ? "✓" : "○"}</span>
+                      {label}
+                    </li>
+                  ))}
+                </ul>
+              )}
             </div>
 
             {/* Confirm Password */}
@@ -168,7 +197,65 @@ const ResetPasswordForm = ({ onSubmit, isLoading, error, success }) => {
                   required
                   className="flex-1 text-sm text-gray-700 placeholder-gray-400 outline-none bg-transparent"
                 />
+
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="text-gray-400 hover:text-gray-600 ml-2"
+                >
+                  {showPassword ? (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="w-4 h-4"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"
+                      />
+                    </svg>
+                  ) : (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="w-4 h-4"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                      />
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                      />
+                    </svg>
+                  )}
+                </button>
               </div>
+              {confirmPassword && (
+                <p
+                  className={`text-xs mt-2 flex items-center gap-1.5 ${
+                    newPassword === confirmPassword
+                      ? "text-green-500"
+                      : "text-red-400"
+                  }`}
+                >
+                  <span>{newPassword === confirmPassword ? "✓" : "✗"}</span>
+                  {newPassword === confirmPassword
+                    ? "Passwords match"
+                    : "Passwords do not match"}
+                </p>
+              )}
             </div>
 
             <button
@@ -207,32 +294,6 @@ const ResetPasswordForm = ({ onSubmit, isLoading, error, success }) => {
           </form>
         </div>
       </div>
-
-      {/* Footer */}
-      <footer className="w-full px-10 py-5 border-t border-blue-100 bg-white/60">
-        <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <span className="text-blue-700 font-bold text-base">
-            🐾 PetConnect
-          </span>
-          <p className="text-gray-400 text-xs">
-            © 2026 PetConnect Adoption Services. All rights reserved.
-          </p>
-          <div className="flex gap-5">
-            <a
-              href="/privacy"
-              className="text-gray-400 text-xs hover:text-gray-600"
-            >
-              Privacy Policy
-            </a>
-            <a
-              href="/terms"
-              className="text-gray-400 text-xs hover:text-gray-600"
-            >
-              Terms of Service
-            </a>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 };
