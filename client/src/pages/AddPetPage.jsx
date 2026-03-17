@@ -329,10 +329,27 @@ export default function AddPetPage() {
   const set = (field) => (e) =>
     setForm((prev) => ({ ...prev, [field]: e.target.value }));
 
+  // REPLACE your existing handleSubmit with this
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await api.post("/shelter/pets", form);
+      // Build FormData instead of plain JSON
+      const formData = new FormData();
+
+      // Append all text fields
+      Object.entries(form).forEach(([key, value]) => {
+        if (value !== "") formData.append(key, value);
+      });
+
+      // Append images under the key "images" — backend expects upload.array("images", 3)
+      if (photos.main)     formData.append("images", photos.main);
+      if (photos.side)     formData.append("images", photos.side);
+      if (photos.activity) formData.append("images", photos.activity);
+
+      await api.post("/shelter/pets", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+
       navigate("/shelter/pets");
     } catch (error) {
       console.error("Failed to create pet:", error);
