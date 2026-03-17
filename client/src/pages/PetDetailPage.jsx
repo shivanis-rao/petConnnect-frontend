@@ -39,10 +39,10 @@ function ChatPopup({ pet, onClose }) {
 
     // Step 2 — connect socket FIRST
     const token = localStorage.getItem("accessToken");
-    const socket = io("http://localhost:5000", {
-      query: { token },
-      transports: ["websocket"],
-    });
+  const socket = io(import.meta.env.VITE_SOCKET_URL || "http://localhost:5000", {
+  query: { token },
+  transports: ["websocket", "polling"],
+});
 
     socketRef.current = socket;
 

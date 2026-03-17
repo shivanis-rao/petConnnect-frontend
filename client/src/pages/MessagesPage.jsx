@@ -335,15 +335,20 @@ export default function MessagesPage() {
   }, []);
 
   const initSocket = () => {
-    const token = localStorage.getItem('accessToken');
-    const socket = io('http://localhost:5000', {
-      query: { token },
-      transports: ['websocket'],
-    });
-    socket.on('connect', () => console.log('Shelter socket connected'));
-    socket.on('connect_error', (err) => console.error('Socket error:', err.message));
-    socketRef.current = socket;
-  };
+  const token = localStorage.getItem('accessToken');
+  
+  // Get socket URL from env, fallback to localhost
+  const socketUrl = import.meta.env.VITE_SOCKET_URL || 'http://localhost:5000';
+  
+  const socket = io(socketUrl, {
+    query: { token },
+    transports: ['websocket'],
+  });
+  
+  socket.on('connect', () => console.log('Shelter socket connected'));
+  socket.on('connect_error', (err) => console.error('Socket error:', err.message));
+  socketRef.current = socket;
+};
 
   const loadConversations = async () => {
     try {
